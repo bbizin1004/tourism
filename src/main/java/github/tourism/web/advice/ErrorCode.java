@@ -23,8 +23,14 @@ public enum ErrorCode {
     EMAIL_ALREADY_EXIST(400,"이미 존재하는 이메일입니다.",HttpStatus.BAD_REQUEST),
     WEAK_PASSWORD(400,"비밀번호는 최소 8자 이상이어야 합니다.",HttpStatus.BAD_REQUEST),
     UPLOAD_FAILURE(406,"파일 업로드에 실패했습니다.",HttpStatus.NOT_ACCEPTABLE),
+    FAILURE_USER_NAME(400,"50자 이내의 이름을 설정해주세요.",HttpStatus.BAD_REQUEST),
+    FAILURE_GENDER(400,"성별은 [M,F,U]로 설정되어야 합니다.",HttpStatus.BAD_REQUEST),
     USER_NOT_FOUNDED(404,"해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     USER_ERROR_FORBIDDEN(403,"로그인 정보와 접근 정보가 다릅니다.", HttpStatus.FORBIDDEN);
+
+    // 예외 처리가 필요한 경우 위의 코드를 참고하여 작성
+
+
     private final int statusCode;
     private final String errorMessage;
     private final HttpStatus httpStatus;
