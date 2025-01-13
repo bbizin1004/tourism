@@ -31,7 +31,7 @@ public class Map {
     private String operation_time;
     private String operation_date;
     private String place_location;
-    private String place_contact_num;
+    private String place_contact_nums;
 
     public Map(Long id, User user, BigDecimal latitude, BigDecimal longitude, String place_name, String place_image, String place_info, String place_details_info, String operation_time, String operation_date, String place_location, String place_contact_num) {
         this.id = id;
@@ -45,6 +45,6 @@ public class Map {
         this.operation_time = operation_time;
         this.operation_date = operation_date;
         this.place_location = place_location;
-        this.place_contact_num = place_contact_num;
+        this.place_contact_nums = place_contact_num;
     }
 }
