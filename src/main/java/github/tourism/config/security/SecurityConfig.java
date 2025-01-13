@@ -40,9 +40,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/resources/static/**","/auth/login","/auth/signup", "/auth/email",
                                 "/books","/books/{id}","/books/category/{category}"
-                                ,"/v3/api-docs/**", "/swagger-ui/**"
+                                ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**"
                         ).permitAll()
-                        .requestMatchers("/auth/secession", "/cart/add", "/api/mypage/**", "/payments/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/auth/secession", "/cart/**", "/api/mypage/**", "/payments/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
