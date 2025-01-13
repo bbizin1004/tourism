@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "auth2")
+@Table(name = "User")
 @DynamicInsert
 @Builder
 @ToString
@@ -37,7 +37,7 @@ public class User {
     @NotEmpty(message = "비밀번호는 필수입니다.")
     private String password;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "username", nullable = false)
     @NotEmpty(message = "사용자 이름은 필수입니다.")
     private String userName;
 
@@ -50,10 +50,10 @@ public class User {
     private String gender;
 
     @CreationTimestamp
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "delete_at")
+    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     @Builder.Default
