@@ -26,9 +26,14 @@ public enum ErrorCode {
     FAILURE_USER_NAME(400,"50자 이내의 이름을 설정해주세요.",HttpStatus.BAD_REQUEST),
     FAILURE_GENDER(400,"성별은 [M,F,U]로 설정되어야 합니다.",HttpStatus.BAD_REQUEST),
     USER_NOT_FOUNDED(404,"해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-    USER_ERROR_FORBIDDEN(403,"로그인 정보와 접근 정보가 다릅니다.", HttpStatus.FORBIDDEN);
+    USER_ERROR_FORBIDDEN(403,"로그인 정보와 접근 정보가 다릅니다.", HttpStatus.FORBIDDEN),
 
     // 예외 처리가 필요한 경우 위의 코드를 참고하여 작성
+    GOODS_NOT_FOUNDED(404,"해당 굿즈를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    CART_NOT_FOUNDED(404,"해당 장바구니 항목을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+
+
+
 
 
     private final int statusCode;
