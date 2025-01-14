@@ -19,6 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,11 +39,11 @@ public class JwtTokenProvider {
         secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
     }
 
-    public String createToken(String email, String username, Set<Authority> roles) {
+    public String createToken(String email, String username, List<String> roles) {
         Claims claims = Jwts.claims()
                 .setSubject(email);
         claims.put("username", username);
-        claims.put("roles", Set.of(Authority.ROLE_USER).stream().map(Authority::name).collect(Collectors.toSet()));
+        claims.put("roles", roles);
 
         Date now = new Date();
 

@@ -2,11 +2,10 @@ package github.tourism.service.user;
 
 import github.tourism.config.security.JwtTokenProvider;
 import github.tourism.data.entity.user.User;
+import github.tourism.data.repository.user.RoleRepository;
 import github.tourism.data.repository.user.UserRepository;
-import github.tourism.service.s3.S3Service;
 import github.tourism.service.user.security.CustomUserDetails;
 import github.tourism.web.advice.ErrorCode;
-import github.tourism.web.dto.user.sign.Authority;
 import github.tourism.web.dto.user.sign.CheckedEmailRequest;
 import github.tourism.web.dto.user.sign.LoginRequest;
 import github.tourism.web.dto.user.sign.SignRequest;
@@ -21,16 +20,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,10 +38,13 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final S3Service awsS3Service;
+    private final RoleRepository roleRepository;
 
     private boolean isPasswordStrong(String password) {
         return password.length() >= 8;
+    }
+    private boolean isGenderFailure(String gender) {
+        return gender.equals("M") || gender.equals("F");
     }
 
     private void checkUserDeleted(User user) {
@@ -71,11 +72,19 @@ public class UserService {
         String country = signUpRequest.getCountry();
         String gender = signUpRequest.getGender();
 
-
+        if (userRepository.existsByEmail(email)) {
+            log.warn("이메일이 이미 존재합니다: {}", email);
+            throw new BadRequestException(ErrorCode.EMAIL_ALREADY_EXIST);
+        }
 
         if (!isPasswordStrong(password)) {
             log.warn("비밀번호가 너무 약합니다.");
             throw new BadRequestException(ErrorCode.WEAK_PASSWORD);
+        }
+
+        if (!isGenderFailure(gender)) {
+            log.warn("성별을 확인해주세요");
+            throw new BadRequestException(ErrorCode.FAILURE_GENDER);
         }
 
         User userPrincipal = User.builder()
@@ -84,7 +93,8 @@ public class UserService {
                 .password(passwordEncoder.encode(password))
                 .country(country)
                 .gender(gender)
-                .authorities(new HashSet<>(List.of(Authority.ROLE_USER)))
+                .role(roleRepository.findByName("ROLE_USER")
+                        .orElseThrow(() -> new NotFoundException(ErrorCode.ROLE_FAILURE)))
                 .build();
 
         userRepository.save(userPrincipal);
@@ -95,7 +105,7 @@ public class UserService {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmailFetchJoin(email)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.EMAIL_NOT_EXIST));
 
         checkUserDeleted(user);
@@ -106,11 +116,15 @@ public class UserService {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+            CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
 
-            Set<Authority> roles = ((CustomUserDetails) userPrincipal).getAuthoritySet();
+            String username = userPrincipal.getUserName();
 
-            return jwtTokenProvider.createToken(email, userPrincipal.getUsername(), roles);
+            List<String> roles = userPrincipal.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+
+            return jwtTokenProvider.createToken(email, username, roles);
 
         } catch (BadCredentialsException e) {
             log.warn("로그인 실패: 잘못된 비밀번호");

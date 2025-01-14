@@ -22,7 +22,7 @@ public enum ErrorCode {
     EMAIL_NOT_EXIST(404,"해당 이메일의 사용자를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
     EMAIL_ALREADY_EXIST(400,"이미 존재하는 이메일입니다.",HttpStatus.BAD_REQUEST),
     WEAK_PASSWORD(400,"비밀번호는 최소 8자 이상이어야 합니다.",HttpStatus.BAD_REQUEST),
-    UPLOAD_FAILURE(406,"파일 업로드에 실패했습니다.",HttpStatus.NOT_ACCEPTABLE),
+    ROLE_FAILURE(400,"사용자 권한이 없습니다.",HttpStatus.BAD_REQUEST),
     FAILURE_USER_NAME(400,"50자 이내의 이름을 설정해주세요.",HttpStatus.BAD_REQUEST),
     FAILURE_GENDER(400,"성별은 [M,F,U]로 설정되어야 합니다.",HttpStatus.BAD_REQUEST),
     USER_NOT_FOUNDED(404,"해당 유저를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
