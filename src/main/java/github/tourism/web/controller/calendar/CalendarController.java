@@ -26,34 +26,39 @@ public class CalendarController {
             @RequestParam String startDate,
             @RequestParam String endDate) {
         try {
-            // Parse the start and end dates
+            // 날짜 파싱
             LocalDate start = LocalDate.parse(startDate);
             LocalDate end = LocalDate.parse(endDate);
 
-            // Convert to LocalDateTime at the start of the day
+            // 날짜를 LocalDateTime으로 변환
             LocalDateTime startTime = LocalDate.parse(startDate).atStartOfDay();
             LocalDateTime endTime = LocalDate.parse(endDate).atStartOfDay().plusDays(1);
-            // Fetch the calendar entries based on the user and date range
+            // 서비스 호출
             List<Calendar> calendars = calendarService.getCalendarEntries(userId, startTime, endTime);
             return ResponseEntity.ok(calendars);
 
         } catch (DateTimeParseException e) {
-            // Return bad request if dates are invalid
+            //  잘못된 날짜 형식 예외 처리
             return ResponseEntity.badRequest().body(null);
         }
     }
 
-    // 캘린더 생성
+    // 여러 개의 캘린더 항목(여행 일정) 등록
     @PostMapping
-    public ResponseEntity<Calendar> createCalendar(@RequestBody Calendar calendar) {
+    public ResponseEntity<List<Calendar>> createCalendar(@RequestBody List<Calendar> calendars) {
         try {
-            // Create the new calendar entry
-            Calendar createdCalendar = calendarService.createCalendar(calendar);
-            // Return the created calendar with a 201 status code
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCalendar);
-        } catch (Exception e) {
-            // If any error occurs during creation, return a bad request
-            return ResponseEntity.badRequest().body(null);
+            // 캘린더 항목이 비어있을 경우 예외 처리
+            if (calendars.isEmpty()) {
+                throw new IllegalArgumentException("캘린더 목록이 비어 있습니다.");
+            }
+            // 캘린더 저장
+            List<Calendar> savedCalendars = calendarService.createCalendar(calendars);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCalendars);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null); // 입력값 검증 예외 처리
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);   // 일반적인 예외 처리
+
         }
     }
 }
