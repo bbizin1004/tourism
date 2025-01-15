@@ -1,5 +1,6 @@
 package github.tourism.web.dto.cart;
 
+import github.tourism.data.entity.cart.Cart;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,5 +20,15 @@ public class CartListResponse {
         this.goodImage = goodImage;
         this.goodPrice = goodPrice;
         this.goodQuantity = goodQuantity;
+    }
+
+    public static CartListResponse from (Cart cart) {
+        return new CartListResponse(
+                cart.getGoods().getGoodId(),
+                cart.getGoods().getGoodsName(),
+                cart.getGoods().getGoodsImage(),
+                cart.getGoods().getPrice(),
+                cart.getQuantity()
+        );
     }
 }
