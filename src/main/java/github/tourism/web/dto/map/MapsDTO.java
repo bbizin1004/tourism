@@ -1,28 +1,25 @@
 package github.tourism.web.dto.map;
 
 
-import github.tourism.data.entity.map.Street;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import github.tourism.data.entity.map.Map;
+import lombok.Data;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class MapsDTO {
 
-    private int mapsId;
-    private String mapsName;
-//    private String mapsImage;
-    private String mapGoo;
-//    private String mapsAddress;
-//    private String mapsDescription;
+    private int mapId;
+    private String place_Name;
+    private String place_image;
+    private String place_info;
+    private String place_location;
+    private String category;
 
-
-    public MapsDTO(Street street) {
-        this.mapsId = street.getId();
-        this.mapsName = street.getStreetName();
-//        this.mapsImage = street.;
-        this.mapGoo = street.getGoo();
+    public MapsDTO(Map map) {
+        this.mapId = map.getMapId();
+        this.place_Name = map.getPlace_name();
+        this.place_image = map.getPlace_image();
+        this.place_info = map.getPlace_info();
+        this.place_location = map.getPlace_location();
+        this.category = map.getCategory();
     }
 }
