@@ -19,14 +19,15 @@ public class MapController {
 
     private final MapService mapService;
 
+
     //전체 관광지 조회
-//    @GetMapping
-//    public ResponseEntity<PagedModel<MapsDTO>> getAllMaps(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size)
-//    {
-//        Page<Map> maps = mapService.getAllMaps(page, size);
-//        PagedModel<MapsDTO> mapsDTO = new PagedModel<>(maps.map(MapsDTO::new));
-//        return ResponseEntity.ok(new PagedModel<>())
-//    }
+    @GetMapping
+    public ResponseEntity<PagedModel<MapsDTO>> getAllMaps(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size)
+    {
+        Page<MapsDTO> maps = mapService.getAllMaps(page, size);
+        return ResponseEntity.ok(new PagedModel<>(maps));
+    }
 
 
 
