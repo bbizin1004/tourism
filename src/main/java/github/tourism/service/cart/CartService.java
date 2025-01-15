@@ -68,12 +68,7 @@ public class CartService {
                     cartRepository.save(cart);
                     List<CartListResponse> updatedCart = cartRepository.findAll()
                             .stream()
-                            .map(updateCart -> new CartListResponse(
-                                    updateCart.getGoods().getGoodId(),
-                                    updateCart.getGoods().getGoodsName(),
-                                    updateCart.getGoods().getGoodsImage(),
-                                    updateCart.getGoods().getPrice(),
-                                    updateCart.getQuantity()))
+                            .map(CartListResponse::from) // 팩토리 메서드
                             .collect(Collectors.toList());
 
                     return new CartResponseWrapper("Success", "장바구니 수량이 변경되었습니다.", updatedCart);
