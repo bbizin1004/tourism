@@ -17,21 +17,31 @@ public class MapService {
 
     private final MapRepository mapRepository;
 
+    //전체 조회
     public Page<MapsDTO> getAllMaps(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-
         Page<Map> maps = mapRepository.findAll(pageable);
         Page<MapsDTO> mapPage = maps.map(MapsDTO::new);
 
         return mapPage;
-
     }
-
 
     //카테고리별로 맵 조회
-    public Page<Map> getMapsByCategory(int page, int size, String category) {
+    public Page<MapsDTO> getMapsByCategory(int page, int size, String category) {
         Pageable pageable = PageRequest.of(page, size);
-        return mapRepository.findByCategory(pageable, category);
+        Page<Map> mapsBycategory = mapRepository.findByCategory(pageable, category);
+        Page<MapsDTO> mapsDTOPage = mapsBycategory.map(MapsDTO::new);
+        return mapsDTOPage;
     }
+
+    //상세 페이지 조회
+    public Map getMapDetail(Integer mapId) {
+        Map map = mapRepository.findById(mapId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid map Id:" + mapId));
+        return map;
+    }
+
+
+
 }
