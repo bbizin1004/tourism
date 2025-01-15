@@ -17,20 +17,16 @@ public class Map {
     @Column(name = "map_id")
     private Integer mapId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private BigDecimal latitude;
-    private BigDecimal longitude;
     private String place_name;
     private String place_image;
     private String place_info;
-    private String place_details_info;
     private String operation_time;
-    private String operation_date;
+    private String close_date;
     private String place_location;
-    private String place_contact_num;
+    private String place_tel;
+    private String category;
+    private BigDecimal lat;
+    private BigDecimal lng;
 
 
 }
