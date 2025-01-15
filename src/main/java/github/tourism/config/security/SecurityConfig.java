@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 "/books","/books/{id}","/books/category/{category}"
                                 ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**"
                         ).permitAll()
-                        .requestMatchers("/auth/secession", "/cart/**", "/api/mypage/**", "/payments/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/auth/secession", "/cart/**","/order/**" ,"/api/mypage/**", "/payments/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
