@@ -1,6 +1,7 @@
 package github.tourism.data.entity.favPlace;
 
 
+import github.tourism.data.entity.map.Map;
 import github.tourism.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,13 +16,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "Fav_place")
 public class FavPlace {
+
     @Id
     @Column(name = "fav_place_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favPlaceId ;
 
-    @Column(name = "map_id")
-    private Integer mapId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "map_id")
+    private Map map;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

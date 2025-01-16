@@ -1,12 +1,14 @@
 package github.tourism.web.controller.map;
 
-import github.tourism.data.entity.map.Map;
 import github.tourism.service.map.MapService;
+import github.tourism.web.dto.map.MapDetailsDTO;
 import github.tourism.web.dto.map.MapsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -37,10 +39,27 @@ public class MapController {
 //    }
     
     //맵 상세조회
-    @GetMapping("/details/{mapId}")
-    public ResponseEntity<Map> getMapDetail(@PathVariable Integer mapId) {
-        Map map = mapService.getMapDetail(mapId);
-        return ResponseEntity.ok(map);
+    @GetMapping("/{mapId}")
+    public ResponseEntity<MapDetailsDTO> getMapDetail(@PathVariable Integer mapId,
+                                                      @AuthenticationPrincipal UserDetails user) {
+        Integer userId = null;
+        if(user != null){
+             userId = Integer.valueOf(user.getUsername());
+        }
+
+        MapDetailsDTO mapDetails = mapService.getMapDetail(mapId,userId);
+        return ResponseEntity.ok(mapDetails);
     }
+
+
+    //찜 저장하기
+//    @PreAuthorize("isAuthenticated()") //로그인 체크
+//    @PostMapping("/favPlace/new")
+//    public ResponseEntity<FavPlace> savefavPlace(@RequestParam("userId") Integer userId,
+//                                                 @RequestParam("mapId") Integer mapId) {
+//        FavPlace favPlace = favPlaceService.saveFavPlace(userId, mapId);
+//        return ResponseEntity.ok(favPlace);
+//    }
+
 
 }
