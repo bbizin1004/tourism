@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FavPlaceService {
+
     private final FavPlaceRepository favPlaceRepository;
 
     // 유저의 찜한 장소 가져오기
@@ -28,4 +28,8 @@ public class FavPlaceService {
         }
         favPlaceRepository.deleteById(favPlaceId);
     }
+
+
+
+
 }

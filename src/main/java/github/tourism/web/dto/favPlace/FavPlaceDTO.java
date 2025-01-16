@@ -19,7 +19,7 @@ public class FavPlaceDTO {
     // 엔티티에서 DTO로 변환하는 생성자
     public FavPlaceDTO(FavPlace favPlace) {
         this.favPlaceId = favPlace.getFavPlaceId();
-        this.mapId = favPlace.getMapId();
+        this.mapId = favPlace.getMap().getMapId();
         this.placeName = favPlace.getPlaceName();
         this.placeLocation = favPlace.getPlaceLocation();
         this.placeImage = favPlace.getPlaceImage();

@@ -1,14 +1,19 @@
 package github.tourism.data.entity.map;
 
 
-import github.tourism.data.entity.user.User;
+import github.tourism.data.entity.favPlace.FavPlace;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Map {
@@ -16,6 +21,9 @@ public class Map {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "map_id")
     private Integer mapId;
+
+    @OneToMany(mappedBy = "map")
+    private List<FavPlace> favPlaces = new ArrayList<>();
 
     private String place_name;
     private String place_image;
@@ -27,6 +35,5 @@ public class Map {
     private String category;
     private BigDecimal lat;
     private BigDecimal lng;
-
 
 }
