@@ -1,5 +1,6 @@
 package github.tourism.data.entity.user;
 
+import github.tourism.data.entity.favPlace.FavPlace;
 import github.tourism.web.advice.ErrorCode;
 import github.tourism.web.dto.user.sign.Authority;
 import github.tourism.web.exception.InvalidValueException;
@@ -11,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,6 +26,7 @@ import java.util.Set;
 @Builder
 @ToString
 public class User {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +59,10 @@ public class User {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    //찜장소 Entity와 양방향 설계
+    @OneToMany(mappedBy = "user")
+    private List<FavPlace> favPlaces = new ArrayList<>();
 
 
 

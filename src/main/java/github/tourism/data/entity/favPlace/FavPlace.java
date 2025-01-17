@@ -44,4 +44,18 @@ public class FavPlace {
 
     @Column(name = "like_status")
     private Boolean likeStatus;
+
+
+    //map과 user로 생성
+    public FavPlace(Map map,User user){
+        this.map = map;
+        this.user = user;
+        this.placeName = map.getPlace_name();
+        this.placeLocation = map.getPlace_location();
+        this.placeImage = map.getPlace_image();
+        this.placeDetailsInfo = map.getPlace_info();
+        //이제 찜인지?? 좋아요인지?? 용도가 머지??
+        this.likeStatus = false;
+    }
+
 }

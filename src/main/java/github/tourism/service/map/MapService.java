@@ -1,8 +1,11 @@
 package github.tourism.service.map;
 
+import github.tourism.data.entity.favPlace.FavPlace;
 import github.tourism.data.entity.map.Map;
+import github.tourism.data.entity.user.User;
 import github.tourism.data.repository.favPlace.FavPlaceRepository;
 import github.tourism.data.repository.map.MapRepository;
+import github.tourism.data.repository.user.UserRepository;
 import github.tourism.web.dto.map.MapDetailsDTO;
 import github.tourism.web.dto.map.MapsDTO;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -19,6 +24,7 @@ public class MapService {
 
     private final MapRepository mapRepository;
     private final FavPlaceRepository favPlaceRepository;
+    private final UserRepository userRepository;
 
     //전체 조회
     public Page<MapsDTO> getAllMaps(int page, int size) {
@@ -56,7 +62,30 @@ public class MapService {
         return mapDetailsDTO;
     }
     
-    //찜 
+    //찜 Toggle
+    @Transactional
+    public boolean toggleFavoritePlace(Integer userId, Integer mapId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 사용자 ID입니다: " + userId));
+
+        Map map = mapRepository.findById(mapId)
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 맵 ID입니다: " + mapId));
+
+        Optional<FavPlace> findFavPlace = favPlaceRepository.findByUserAndMap(user, map);
+
+
+        if (findFavPlace.isPresent()) {
+            //찜 제거
+            favPlaceRepository.delete(findFavPlace.get());
+            return false;
+        } else {
+            // 찜 등록
+            FavPlace favPlace = new FavPlace(map,user);
+            favPlaceRepository.save(favPlace);
+            return true;
+        }
+    }
 
 
 
