@@ -1,12 +1,16 @@
 package github.tourism.web.controller.map;
 
+import github.tourism.service.favPlace.FavPlaceService;
 import github.tourism.service.map.MapService;
+import github.tourism.web.dto.favPlace.FavPlaceDTO;
 import github.tourism.web.dto.map.MapDetailsDTO;
 import github.tourism.web.dto.map.MapsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class MapController {
 
     private final MapService mapService;
+    private final FavPlaceService favPlaceService;
 
 
     //전체 관광지 조회
@@ -52,13 +57,28 @@ public class MapController {
     }
 
 
-    //찜 저장하기
-//    @PreAuthorize("isAuthenticated()") //로그인 체크
-//    @PostMapping("/favPlace/new")
-//    public ResponseEntity<FavPlace> savefavPlace(@RequestParam("userId") Integer userId,
-//                                                 @RequestParam("mapId") Integer mapId) {
-//        FavPlace favPlace = favPlaceService.saveFavPlace(userId, mapId);
-//        return ResponseEntity.ok(favPlace);
+    //찜 토글하기
+    @PreAuthorize("isAuthenticated()") //로그인 체크
+    @PostMapping("/{mapId}/new")
+    public ResponseEntity<Boolean> saveFavPlace(@AuthenticationPrincipal UserDetails user,
+                                                    @PathVariable Integer mapId) {
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Integer userId = Integer.valueOf(user.getUsername());
+        boolean isFavorite = mapService.toggleFavoritePlace(userId, mapId);
+
+        return ResponseEntity.ok(isFavorite);
+    }
+
+    //찜 삭제하기
+//    @PreAuthorize("isAuthenticated()")
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<Void> deleteFavPlace(@RequestParam("userId") Integer userId,
+//                                               @RequestParam("mapId") Integer mapId) {
+//        favPlaceService.deleteFavPlace(userId, mapId);
+//        return ResponseEntity.noContent().build();
 //    }
 
 
