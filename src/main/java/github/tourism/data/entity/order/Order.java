@@ -1,12 +1,10 @@
 package github.tourism.data.entity.order;
 
+import github.tourism.data.entity.delivery.Delivery;
 import github.tourism.data.entity.user.User;
 import github.tourism.web.dto.order.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -42,5 +40,22 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItems> orderItems = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_info_id")
+    private Delivery deliveryInfo;
+
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+
+    // 주문의 총 금액을 계산하는 메서드
+    public Integer calculateTotalPrice() {
+        return orderItems.stream()
+                .mapToInt(OrderItems::getPrice)
+                .sum();
+    }
 
 }
