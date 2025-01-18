@@ -2,7 +2,7 @@ package github.tourism.web.controller.map;
 
 import github.tourism.service.favPlace.FavPlaceService;
 import github.tourism.service.map.MapService;
-import github.tourism.web.dto.favPlace.FavPlaceDTO;
+import github.tourism.service.user.security.CustomUserDetails;
 import github.tourism.web.dto.map.MapDetailsDTO;
 import github.tourism.web.dto.map.MapsDTO;
 import lombok.RequiredArgsConstructor;
@@ -46,10 +46,11 @@ public class MapController {
     //맵 상세조회
     @GetMapping("/{mapId}")
     public ResponseEntity<MapDetailsDTO> getMapDetail(@PathVariable Integer mapId,
-                                                      @AuthenticationPrincipal UserDetails user) {
+                                                      @AuthenticationPrincipal CustomUserDetails user) {
+
         Integer userId = null;
         if(user != null){
-             userId = Integer.valueOf(user.getUsername());
+             userId = Integer.valueOf(user.getUserId());
         }
 
         MapDetailsDTO mapDetails = mapService.getMapDetail(mapId,userId);
@@ -60,26 +61,19 @@ public class MapController {
     //찜 토글하기
     @PreAuthorize("isAuthenticated()") //로그인 체크
     @PostMapping("/{mapId}/new")
-    public ResponseEntity<Boolean> saveFavPlace(@AuthenticationPrincipal UserDetails user,
+    public ResponseEntity<Boolean> toggleFavPlace(@AuthenticationPrincipal CustomUserDetails user,
                                                     @PathVariable Integer mapId) {
 
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        Integer userId = Integer.valueOf(user.getUsername());
+        Integer userId = Integer.valueOf(user.getUserId());
         boolean isFavorite = mapService.toggleFavoritePlace(userId, mapId);
 
         return ResponseEntity.ok(isFavorite);
     }
 
-    //찜 삭제하기
-//    @PreAuthorize("isAuthenticated()")
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<Void> deleteFavPlace(@RequestParam("userId") Integer userId,
-//                                               @RequestParam("mapId") Integer mapId) {
-//        favPlaceService.deleteFavPlace(userId, mapId);
-//        return ResponseEntity.noContent().build();
-//    }
+
 
 
 }
