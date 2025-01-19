@@ -33,16 +33,7 @@ public class MapController {
         return ResponseEntity.ok(new PagedModel<>(allMaps));
     }
 
-    //카테고리별 조회
-//    @GetMapping("/{category}")
-//    public ResponseEntity<PagedModel<MapsDTO>> getMapsByCategory(
-//            @PathVariable String category, 
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size) {
-//        Page<MapsDTO> maps = mapService.getMapsByCategory(page, size, category);
-//        return ResponseEntity.ok(new PagedModel<>(maps));
-//    }
-    
+
     //맵 상세조회
     @GetMapping("/{mapId}")
     public ResponseEntity<MapDetailsDTO> getMapDetail(@PathVariable Integer mapId,
