@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Order {
     private Timestamp orderDate;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderItems> orderItems = new ArrayList<>();
+    private List<OrderItems> orderItems;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_info_id")
@@ -52,10 +53,10 @@ public class Order {
 
 
     // 주문의 총 금액을 계산하는 메서드
-    public Integer calculateTotalPrice() {
+    public BigDecimal calculateTotalPrice() {
         return orderItems.stream()
-                .mapToInt(OrderItems::getPrice)
-                .sum();
+                .map(OrderItems::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
