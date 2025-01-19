@@ -101,5 +101,14 @@ public class ExceptionControllerAdvice {
 
         return ResponseEntity.status(ete.getHttpStatus()).body(er);
     }
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResult> handleUnauthorizedException(UnauthorizedException uae){
+        ErrorResult er = new ErrorResult();
+        er.setStatusCode(uae.getHttpStatus().value());
+        er.setStatus(uae.getHttpStatus());
+        er.setMessage(uae.getMessage());
+        log.error(uae.getMessage());
 
+        return ResponseEntity.status(uae.getHttpStatus()).body(er);
+    }
 }

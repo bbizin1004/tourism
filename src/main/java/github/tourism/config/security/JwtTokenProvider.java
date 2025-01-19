@@ -1,8 +1,10 @@
 package github.tourism.config.security;
 
 
+import github.tourism.web.dto.user.UserInfoDTO;
 import github.tourism.web.dto.user.sign.Authority;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +18,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -85,6 +85,10 @@ public class JwtTokenProvider {
 
 
     public boolean validateToken(String jwtToken) {
+        if (StringUtils.isEmpty(jwtToken)) {
+            log.info("JWT 토큰이 null이거나 비어 있습니다.");
+            return false;
+        }
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
@@ -154,5 +158,27 @@ public class JwtTokenProvider {
         Date expiration = claims.getExpiration();
         return expiration.getTime() - System.currentTimeMillis();
     }
+    public UserInfoDTO getClaim(String token) {
+        if (token == null) {
+            throw new IllegalArgumentException("JWT 토큰이 null이거나 비어 있습니다.");
+        }
+        Claims claimsBody;
+        try {
+            claimsBody = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            log.error("JWT 클레임을 파싱하는 중 오류 발생: {}", e.getMessage());
+            throw new RuntimeException("JWT 클레임을 파싱하는 중 오류 발생", e);
+        }
 
+        return UserInfoDTO.builder()
+                .email(claimsBody.getSubject())
+                .category(claimsBody.getOrDefault("category", "").toString())
+                .username(claimsBody.getOrDefault("username", "").toString())
+                .roles(String.join(",", (List<String>) claimsBody.getOrDefault("roles", new ArrayList<>())))
+                .build();
+    }
 }
