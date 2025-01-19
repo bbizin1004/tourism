@@ -30,7 +30,8 @@ public class JwtTokenProvider {
     @Value("${jwt.secret-key-source}")
     private String secretKeySource;
     private Key secretKey ;
-    private final long tokenValidMillisecond=1000L*30*60;
+    private final long tokenValidMillisecond=1000L*30*30;
+    private final long refreshValidMillisecond=1000L*30*360;
     private final UserDetailsService userDetailsService;
 
     @PostConstruct
@@ -39,9 +40,10 @@ public class JwtTokenProvider {
         secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
     }
 
-    public String createToken(String email, String username, List<String> roles) {
+    public String createToken(String category,String email, String username, List<String> roles) {
         Claims claims = Jwts.claims()
                 .setSubject(email);
+        claims.put("category",category);
         claims.put("username", username);
         claims.put("roles", roles);
 
@@ -51,6 +53,23 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
+                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String createRefreshToken(String category,String email, String username, List<String> roles ){
+        Claims claims = Jwts.claims()
+                .setSubject(email);
+        claims.put("category",category);
+        claims.put("username", username);
+        claims.put("roles", roles);
+
+        Date now = new Date();
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + refreshValidMillisecond))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -96,7 +115,7 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    private String getUserEmail(final String jwtToken) {
+    public String getUserEmail(final String jwtToken) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
@@ -104,4 +123,36 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
+    public String getUsername(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("username", String.class);
+    }
+    public List<String> getRoles(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("roles", List.class);
+    }
+    public String getCategory(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().get("category", String.class);
+    }
+
+    public Boolean isExpired(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getExpiration().before(new Date());
+    }
+
+    public Long getExpirationTime(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        Date expiration = claims.getExpiration();
+        return expiration.getTime() - System.currentTimeMillis();
+    }
+
 }

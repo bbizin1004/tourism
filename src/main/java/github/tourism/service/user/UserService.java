@@ -1,7 +1,9 @@
 package github.tourism.service.user;
 
 import github.tourism.config.security.JwtTokenProvider;
+import github.tourism.data.entity.user.RefreshToken;
 import github.tourism.data.entity.user.User;
+import github.tourism.data.repository.user.RefreshRepository;
 import github.tourism.data.repository.user.RoleRepository;
 import github.tourism.data.repository.user.UserRepository;
 import github.tourism.service.user.security.CustomUserDetails;
@@ -26,8 +28,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +45,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
+    private final RefreshRepository refreshRepository;
 
     private boolean isPasswordStrong(String password) {
         return password.length() >= 8;
@@ -62,6 +69,20 @@ public class UserService {
             throw new BadRequestException(ErrorCode.EMAIL_ALREADY_EXIST);
         }
         return true;
+    }
+
+    private void addRefreshEntity(String email, String refresh, Long expiredMs) {
+        Date expirationDate = new Date(System.currentTimeMillis() + expiredMs);
+
+        RefreshToken refreshEntity = new RefreshToken();
+        refreshEntity.setEmail(email);
+        refreshEntity.setRefresh(refresh);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        String formattedExpirationDate = sdf.format(expirationDate);
+        refreshEntity.setExpiration(formattedExpirationDate);
+
+        refreshRepository.save(refreshEntity);
     }
 
     @Transactional(transactionManager = "tmJpa1")
@@ -101,7 +122,7 @@ public class UserService {
         return true;
     }
 
-    public String login(LoginRequest loginRequest) {
+    public Map<String, String> login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
@@ -124,7 +145,17 @@ public class UserService {
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            return jwtTokenProvider.createToken(email, username, roles);
+            String access = jwtTokenProvider.createToken("access", email, username, roles);
+            String refresh = jwtTokenProvider.createRefreshToken("refresh", email, username, roles);
+
+            Long expiredMs = jwtTokenProvider.getExpirationTime(refresh);
+            addRefreshEntity(email, refresh, expiredMs);
+
+            Map<String, String> tokens = new HashMap<>();
+            tokens.put("access", access);
+            tokens.put("refresh", refresh);
+
+            return tokens;
 
         } catch (BadCredentialsException e) {
             log.warn("로그인 실패: 잘못된 비밀번호");

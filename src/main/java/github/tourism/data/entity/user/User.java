@@ -1,5 +1,6 @@
 package github.tourism.data.entity.user;
 
+import github.tourism.data.entity.favPlace.FavPlace;
 import github.tourism.web.advice.ErrorCode;
 import github.tourism.web.dto.user.sign.Authority;
 import github.tourism.web.exception.InvalidValueException;
@@ -11,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -59,6 +62,9 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Roles role;
+
+    @OneToMany(mappedBy = "user")
+    private List<FavPlace> favPlaces = new ArrayList<>();
 
     public void deleteUser() {
         this.deletedAt = LocalDateTime.now();

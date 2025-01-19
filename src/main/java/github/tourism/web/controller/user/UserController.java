@@ -8,6 +8,7 @@ import github.tourism.web.dto.user.sign.*;
 import github.tourism.web.exception.BadRequestException;
 import github.tourism.web.exception.NotAcceptException;
 import github.tourism.web.exception.NotFoundException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -48,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> login(@Valid @RequestBody LoginRequest loginRequest, HttpServletResponse httpServletResponse, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().forEach(error ->
                     log.error("Field: {}, Message: {}", error.getField(), error.getDefaultMessage())
@@ -56,9 +59,22 @@ public class UserController {
             throw new BadRequestException(ErrorCode.REGISTER_FAILURE);
         }
 
-        String token = authService.login(loginRequest);
-        httpServletResponse.setHeader("Bearer_Token", token);
-        return ResponseEntity.ok("로그인이 성공하였습니다.");
+        Map<String, String> tokens = authService.login(loginRequest);
+        httpServletResponse.setHeader("Authorization", "Bearer " + tokens.get("access"));
+        Cookie refreshCookie = createCookie("refresh", tokens.get("refresh"));
+        httpServletResponse.addCookie(refreshCookie);
+        return ResponseEntity.ok(tokens);
+    }
+
+    private Cookie createCookie(String key, String value) {
+
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(3*60*60); // 쿠키의 유효 기간을 설정
+        cookie.setSecure(true); // 쿠키가 HTTPS 연결을 통해서만 전송되도록 설정
+        cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
+        cookie.setHttpOnly(true); //쿠키를 HTTP 전용으로 설정 -> JavaScript와 같은 클라이언트 측 스크립트에서 이 쿠키에 접근할 수 없게 됩니다.
+
+        return cookie;
     }
 
     @GetMapping(value = "/delete")
