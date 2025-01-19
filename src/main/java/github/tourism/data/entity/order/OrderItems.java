@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -32,7 +34,8 @@ public class OrderItems {
     private Integer quantity;
 
     @Column(name = "price")
-    private Integer price;
+    private BigDecimal price;
+
 
     // 팩토리 메서드
     public static OrderItems from(Order order, Cart cartItem) {
@@ -41,7 +44,9 @@ public class OrderItems {
                 .order(order)
                 .goods(goods)
                 .quantity(cartItem.getQuantity())
-                .price(goods.getPrice() * cartItem.getQuantity())
+                .price(BigDecimal.valueOf(goods.getPrice())
+                        .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .build();
     }
+
 }

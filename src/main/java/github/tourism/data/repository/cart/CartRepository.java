@@ -26,7 +26,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     // 특정 사용자와 특정 상품에 대한 장바구니 항목 삭제
     @Modifying
     @Transactional
-    @Query("DELETE FROM Cart c WHERE c.user.userId = :userId AND c.goods.goodId = :goodsId")
-    void deleteByUserIdAndGoodsId(@Param("userId") Integer userId, @Param("goodsId") Integer goodId);
-
+    @Query("DELETE FROM Cart c WHERE c.goods.goodId IN :goodsIds")
+    void deleteByGoodsIdIn(@Param("goodsIds") List<Integer> orderItemGoodsIds);
 }
