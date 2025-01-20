@@ -36,21 +36,23 @@ public class Map {
     private BigDecimal lat;
     private BigDecimal lng;
 
+    //  찜 카운트 필드
+    @Column(name = "likemark_count", nullable = false)
+    private Integer likemarkCount = 0;
 
-    //    찜 카운트 필드
-//    @Column(name = "likemark_count", nullable = false)
-//    private int likemarkCount = 0;
-//
-//    // 찜 카운트 증가 메서드
-//    public void incrementLikemarkCount() {
-//        this.likemarkCount++;
-//    }
-//
-//    // 찜 카운트 감소 메서드
-//    public void decrementLikemarkCount() {
-//        if (this.likemarkCount > 0) {
-//            this.likemarkCount--;
-//        }
-//    }
+    // 찜 카운트 증가 메서드
+    public void incrementLikemarkCount() {
+        this.likemarkCount++;
+    }
 
+    // 찜 카운트 감소 메서드
+    public void decrementLikemarkCount() {
+        if (this.likemarkCount > 0) {
+            this.likemarkCount--;
+        }
+    }
+
+//    Optimistic Lock
+    @Version
+    private Long version;
 }

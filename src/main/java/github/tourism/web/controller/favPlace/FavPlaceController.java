@@ -31,12 +31,26 @@ public class FavPlaceController {
         return ResponseEntity.ok(favPlaceDTOs);
     }
 
-    //   찜한 장소 삭제
-    @DeleteMapping("/{favPlaceId}")
-    public ResponseEntity<String> deleteFavPlace(@PathVariable Integer favPlaceId) {
-        favPlaceService.deleteFavPlace(favPlaceId);
-        return ResponseEntity.ok("찜한 장소가 삭제되었습니다.");
+    // 장소 찜 추가
+    @PostMapping("/{mapId}/like")
+    public ResponseEntity<String> likePlace(@RequestParam Integer userId, @PathVariable Integer mapId) {
+        favPlaceService.addFavPlace(userId, mapId);
+        return ResponseEntity.ok("찜이 추가되었습니다.");
     }
+
+    // 장소 찜 삭제
+    @DeleteMapping("/{mapId}/unlike")
+    public ResponseEntity<String> unlikePlace(@RequestParam Integer userId, @PathVariable Integer mapId) {
+        favPlaceService.removeFavPlaceByUserAndMap(userId, mapId);
+        return ResponseEntity.ok("찜이 해제되었습니다.");
+    }
+
+//    //   찜한 장소 삭제
+//    @DeleteMapping("/{favPlaceId}")
+//    public ResponseEntity<String> deleteFavPlace(@PathVariable Integer favPlaceId) {
+//        favPlaceService.deleteFavPlace(favPlaceId);
+//        return ResponseEntity.ok("찜한 장소가 삭제되었습니다.");
+//    }
 
 
 
