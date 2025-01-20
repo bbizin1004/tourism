@@ -60,19 +60,13 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    //찜장소 Entity와 양방향 설계
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Roles role;
+
     @OneToMany(mappedBy = "user")
     private List<FavPlace> favPlaces = new ArrayList<>();
-
-
-
-    @Builder.Default
-    @Transient
-    private Set<Authority> authorities = Set.of(Authority.ROLE_USER);
-
-    public void User(Integer userId) {
-    }
-
 
     public void deleteUser() {
         this.deletedAt = LocalDateTime.now();
@@ -102,7 +96,7 @@ public class User {
 
     public void updateGender(String gender) {
         if (gender != null  && !gender.isEmpty()) {
-            if(gender.length() == 1){
+            if(gender.equals("M") || gender.equals("F")){
                 this.gender = gender;
             }else{
                 throw new InvalidValueException(ErrorCode.FAILURE_GENDER);

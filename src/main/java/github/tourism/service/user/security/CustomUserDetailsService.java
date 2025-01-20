@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Set;
 
 @Primary
@@ -21,10 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User userPrincipal = userRepository.findByEmail(email).orElseThrow(()
+        User userPrincipal = userRepository.findByEmailFetchJoin(email).orElseThrow(()
                 -> new UsernameNotFoundException("email 에 해당하는 UserPrincipal가 없습니다"));
 
-        Set<Authority> roles = userPrincipal.getAuthorities();
+        String role = userPrincipal.getRole().getName();
 
         return CustomUserDetails.builder()
                 .userId(userPrincipal
@@ -32,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .email(userPrincipal.getEmail())
                 .password(userPrincipal.getPassword())
                 .userName(userPrincipal.getUserName())
-                .authorities(roles)
+                .authorities(Collections.singletonList(role))
                 .build();
     }
 }
