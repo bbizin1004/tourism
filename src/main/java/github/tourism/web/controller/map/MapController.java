@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class MapController {
 
     private final MapService mapService;
-    private final FavPlaceService favPlaceService;
 
 
     //전체 관광지 조회
@@ -31,6 +29,15 @@ public class MapController {
     {
         Page<MapsDTO> allMaps = mapService.getAllMaps(page, size);
         return ResponseEntity.ok(new PagedModel<>(allMaps));
+    }
+
+    //카테고리별로 조회
+    @GetMapping("/category/{category}")
+    public ResponseEntity<PagedModel<MapsDTO>> getMapsByCategory(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+            @PathVariable String category) {
+        Page<MapsDTO> mapsByCategory = mapService.getMapsByCategory(page, size, category);
+        return ResponseEntity.ok(new PagedModel<>(mapsByCategory));
     }
 
 
