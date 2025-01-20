@@ -22,6 +22,9 @@ public interface FavPlaceRepository extends JpaRepository<FavPlace, Integer> {
     //사용자 ID와 MapID로 사용자가 해당 맵을 찜했는지 확인
     boolean existsByUserUserIdAndMapMapId(Integer userId, Integer mapId);
 
+    // 사용자 ID와 Map ID로 찜한 FavPlace 가져오기
+    Optional<FavPlace> findByUserUserIdAndMapMapId(Integer userId, Integer mapId);
+
     //사용자와 Map로 단건 조회
     Optional<FavPlace> findByUserAndMap(User user, Map map);
 

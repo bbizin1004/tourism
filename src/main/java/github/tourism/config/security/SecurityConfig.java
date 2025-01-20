@@ -37,18 +37,17 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/resources/static/**","/auth/login","/auth/signup", "/auth/email",
-                                "/books","/books/{id}","/books/category/{category}"
-                                ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**","/maps/**"
-                        ).permitAll()
-                        .requestMatchers("/auth/secession", "/cart/**","/orders/**" ,"/api/mypage/**", "/payment/**").hasAuthority("ROLE_USER")
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                        .accessDeniedHandler(new CustomerAccessDeniedHandler())
-                )
+//                .authorizeHttpRequests(authz -> authz
+//                        .requestMatchers("/resources/static/**","/auth/login","/auth/signup", "/auth/email"
+//                                ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**","/maps/**"
+//                        ).permitAll()
+//                        .requestMatchers("/auth/secession", "/cart/**","/orders/**" ,"/api/mypage/**", "/payment/**", "/fav-places/**", "calendar/**", "calendar-details/**").hasAuthority("ROLE_USER")
+//                        .anyRequest().authenticated()
+//                )
+//                .exceptionHandling(exceptionHandling -> exceptionHandling
+//                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+//                        .accessDeniedHandler(new CustomerAccessDeniedHandler())
+//                )
 
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
