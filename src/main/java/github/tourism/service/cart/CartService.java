@@ -61,12 +61,12 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponseWrapper updateCart(Integer cartId, int quantity) {
+    public CartResponseWrapper updateCart(Integer cartId, int quantity,Integer userId) {
         return cartRepository.findByIdWithGoods(cartId)
                 .map(cart -> {
                     cart.updateQuantity(quantity);
                     cartRepository.save(cart);
-                    List<CartListResponse> updatedCart = cartRepository.findAll()
+                    List<CartListResponse> updatedCart = cartRepository.findCartByUserId(userId)
                             .stream()
                             .map(CartListResponse::from) // 팩토리 메서드
                             .collect(Collectors.toList());
