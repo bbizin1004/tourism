@@ -10,7 +10,7 @@ public enum ErrorCode {
     // 로그인
     REGISTER_FAILURE(400,"입력하신 데이터에 문제가 있습니다.",HttpStatus.BAD_REQUEST),
     SECESSION_NOT_FOUND(404,"탈퇴한 회원이 아닙니다.",HttpStatus.NOT_FOUND),
-    SECESSION_DETAIL(403," 해당 날짜에 탈퇴를 하셨습니다.",HttpStatus.FORBIDDEN),
+    SECESSION_DETAIL(410," 해당 날짜에 탈퇴를 하셨습니다.",HttpStatus.FORBIDDEN),
     USER_SECESSION_FAILURE(401,"지금 상태에서 탈퇴 진행을 하실 수 없습니다.", HttpStatus.UNAUTHORIZED),
     LOGIN_FAILURE(406,"로그인 할 수 없습니다.", HttpStatus.NOT_ACCEPTABLE),
     LOGIN_FAILURE2(406,"탈퇴를 하셔서 로그인이 불가능합니다.", HttpStatus.NOT_ACCEPTABLE),

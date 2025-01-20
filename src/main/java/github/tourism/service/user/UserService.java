@@ -167,12 +167,8 @@ public class UserService {
     }
 
     @Transactional(transactionManager = "tmJpa1")
-    public boolean secession() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Integer userId = userDetails.getUserId();
-
-        User user = userRepository.findById(userId)
+    public boolean secession(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.USER_NOT_FOUNDED));
 
         if (user.getDeletedAt() != null) {
