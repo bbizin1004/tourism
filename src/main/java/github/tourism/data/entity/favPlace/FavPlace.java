@@ -22,7 +22,7 @@ public class FavPlace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favPlaceId ;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "map_id")
     private Map map;
 
@@ -45,7 +45,6 @@ public class FavPlace {
     @Column(name = "like_status")
     private Boolean likeStatus;
 
-
     //map과 user로 생성
     public FavPlace(Map map,User user){
         this.map = map;
@@ -56,6 +55,7 @@ public class FavPlace {
         this.placeDetailsInfo = map.getPlace_info();
         //이제 찜인지?? 좋아요인지?? 용도가 머지??
         this.likeStatus = false;
+
     }
 
 }

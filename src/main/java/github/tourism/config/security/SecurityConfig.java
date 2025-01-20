@@ -1,6 +1,9 @@
 package github.tourism.config.security;
 
+import github.tourism.data.repository.user.RefreshRepository;
+import github.tourism.web.filter.CustomLogoutFilter;
 import github.tourism.web.filter.JwtAuthenticationFilter;
+import github.tourism.web.filter.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +15,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -24,37 +30,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final RefreshRepository refreshRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers(AbstractHttpConfigurer::disable) // AuthenticationConfigurer::disable 제거
-                .formLogin(AbstractHttpConfigurer::disable) // formLogin 비활성화
-                .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정
-                .httpBasic(AbstractHttpConfigurer::disable) // HTTP Basic 비활성화
-                .rememberMe(AbstractHttpConfigurer::disable) // Remember Me 비활성화
+                .headers(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .rememberMe(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests(authz -> authz
+
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/resources/static/**","/auth/login","/auth/signup", "/auth/email",
-                                "/books","/books/{id}","/books/category/{category}"
-                                ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**","/maps/**"
+                                "/v3/api-docs/**", "/swagger-ui/**","/goods/**","/maps/**","/reissue"
                         ).permitAll()
-                        .requestMatchers("/auth/secession", "/cart/**","/orders/**" ,"/api/mypage/**", "/payment/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/auth/secession","/calendar/**","/calendar-details/**"
+                                ,"/cart/**","/order/**" ,"/api/mypage/**", "/payments/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomerAccessDeniedHandler())
                 )
-
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new CustomLogoutFilter(jwtTokenProvider, refreshRepository), LogoutFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -68,7 +77,8 @@ public class SecurityConfig {
                 "https://bookshoppingmall.vercel.app"// 프론트 배포 주소
         ));
         configuration.setAllowCredentials(true);
-        configuration.addExposedHeader("Bearer_Token");
+        configuration.setExposedHeaders(Collections.singletonList("access"));
+        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
         configuration.setMaxAge(3600L);

@@ -10,12 +10,13 @@ import org.springframework.http.HttpStatus;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignResponse {
+public class LoginResponse {
     private HttpStatus httpStatus;
+
     private boolean isSuccess;
     private int statusCode;
     private String message;
-    public SignResponse(boolean isSuccess, String message) {
+    public LoginResponse(boolean isSuccess, String message) {
         this.httpStatus = isSuccess ? HttpStatus.OK : HttpStatus.BAD_REQUEST; // 기본 HTTP 상태 설정
         this.isSuccess = isSuccess;
         this.statusCode = isSuccess ? HttpStatus.OK.value() : HttpStatus.BAD_REQUEST.value();
