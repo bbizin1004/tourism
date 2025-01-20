@@ -51,7 +51,7 @@ public class CartController {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        CartResponseWrapper updateCart = cartService.updateCart(request.getCartId(), request.getQuantity());
+        CartResponseWrapper updateCart = cartService.updateCart(request.getCartId(), request.getQuantity(),userDetails.getUserId());
         if ("Error".equals(updateCart.getStatus()) ) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(updateCart);
         }
