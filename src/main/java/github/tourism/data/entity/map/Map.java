@@ -1,50 +1,56 @@
 package github.tourism.data.entity.map;
 
 
-import github.tourism.data.entity.user.User;
+import github.tourism.data.entity.favPlace.FavPlace;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Map {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "map_id")
-    private Long id;
+    private Integer mapId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany(mappedBy = "map")
+    private List<FavPlace> favPlaces = new ArrayList<>();
 
-    private BigDecimal latitude;
-    private BigDecimal longitude;
     private String place_name;
     private String place_image;
     private String place_info;
-    private String place_details_info;
     private String operation_time;
-    private String operation_date;
+    private String close_date;
     private String place_location;
-    private String place_contact_num;
+    private String place_tel;
+    private String category;
+    private BigDecimal lat;
+    private BigDecimal lng;
 
-    public Map(Long id, User user, BigDecimal latitude, BigDecimal longitude, String place_name, String place_image, String place_info, String place_details_info, String operation_time, String operation_date, String place_location, String place_contact_num) {
-        this.id = id;
-        this.user = user;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.place_name = place_name;
-        this.place_image = place_image;
-        this.place_info = place_info;
-        this.place_details_info = place_details_info;
-        this.operation_time = operation_time;
-        this.operation_date = operation_date;
-        this.place_location = place_location;
-        this.place_contact_num = place_contact_num;
-    }
+
+    //    찜 카운트 필드
+//    @Column(name = "likemark_count", nullable = false)
+//    private int likemarkCount = 0;
+//
+//    // 찜 카운트 증가 메서드
+//    public void incrementLikemarkCount() {
+//        this.likemarkCount++;
+//    }
+//
+//    // 찜 카운트 감소 메서드
+//    public void decrementLikemarkCount() {
+//        if (this.likemarkCount > 0) {
+//            this.likemarkCount--;
+//        }
+//    }
+
 }

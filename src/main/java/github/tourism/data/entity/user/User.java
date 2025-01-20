@@ -26,6 +26,7 @@ import java.util.Set;
 @Builder
 @ToString
 public class User {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,6 +59,7 @@ public class User {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")

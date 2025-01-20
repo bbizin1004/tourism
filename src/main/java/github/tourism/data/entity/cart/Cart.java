@@ -3,15 +3,13 @@ package github.tourism.data.entity.cart;
 import github.tourism.data.entity.goods.Goods;
 import github.tourism.data.entity.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.sql.Timestamp;
 
+@Data
 @Getter
 @Builder
 @NoArgsConstructor

@@ -35,7 +35,8 @@ public enum ErrorCode {
 
     // 예외 처리가 필요한 경우 위의 코드를 참고하여 작성
     GOODS_NOT_FOUNDED(404,"해당 굿즈를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-    CART_NOT_FOUNDED(404,"해당 장바구니 항목을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+    CART_NOT_FOUNDED(404,"해당 장바구니 항목을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    CART_EMPTY(404,"사용자의 장바구니가 비어있습니다.", HttpStatus.NOT_FOUND);
 
 
 

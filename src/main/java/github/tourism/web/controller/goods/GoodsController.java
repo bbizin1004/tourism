@@ -21,7 +21,7 @@ public class GoodsController {
     @GetMapping
     public ResponseEntity<PagedModel<GoodsResponse>> getAllGoods(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "12") int size
     ) {
         Page<GoodsResponse> goods = goodsService.getAllGoods(page,size);
         return ResponseEntity.ok(new PagedModel<>(goods));

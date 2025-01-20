@@ -1,6 +1,7 @@
 package github.tourism.data.entity.favPlace;
 
 
+import github.tourism.data.entity.map.Map;
 import github.tourism.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,13 +16,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "Fav_place")
 public class FavPlace {
+
     @Id
     @Column(name = "fav_place_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favPlaceId ;
 
-    @Column(name = "map_id")
-    private Integer mapId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "map_id")
+    private Map map;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -41,4 +44,18 @@ public class FavPlace {
 
     @Column(name = "like_status")
     private Boolean likeStatus;
+
+
+    //map과 user로 생성
+    public FavPlace(Map map,User user){
+        this.map = map;
+        this.user = user;
+        this.placeName = map.getPlace_name();
+        this.placeLocation = map.getPlace_location();
+        this.placeImage = map.getPlace_image();
+        this.placeDetailsInfo = map.getPlace_info();
+        //이제 찜인지?? 좋아요인지?? 용도가 머지??
+        this.likeStatus = false;
+    }
+
 }

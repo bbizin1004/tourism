@@ -43,5 +43,9 @@ public class Goods {
 
     @Column(name = "category")
     private String category;
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
 }
 
