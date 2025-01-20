@@ -19,7 +19,7 @@ public class StatisticController {
 
     private final StatisticService statisticService;
 
-    //수정중...
+    //수정중.....
     @GetMapping("/genderTop7PopulationByYear")
     public ResponseEntity<List<GenderStatisticDTO>> getTopPopulationByYear() {
         List<GenderStatisticDTO> genderStatistics = statisticService.getTop7TotalPopulationByYear();
