@@ -37,9 +37,10 @@ public enum ErrorCode {
     GOODS_NOT_FOUNDED(404,"해당 굿즈를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     CART_NOT_FOUNDED(404,"해당 장바구니 항목을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
     CART_EMPTY(404,"사용자의 장바구니가 비어있습니다.", HttpStatus.NOT_FOUND),
-    MAPS_NOT_FOUNDED(404,"해당 맵을 찾을 수 없습니다.",HttpStatus.NOT_FOUND);
+    MAPS_NOT_FOUNDED(404,"해당 맵을 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
 
 
+    NOT_SAVED_PLACE(400,"존재하지 않는 장소입니다.",HttpStatus.BAD_REQUEST);
 
     private final int statusCode;
     private final String errorMessage;
