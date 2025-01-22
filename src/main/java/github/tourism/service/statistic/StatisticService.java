@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static java.util.stream.Collectors.*;
 
 @Service
@@ -32,14 +34,12 @@ public class StatisticService {
     }
 
     //연도에따라 상위7개 총인구 순위 가져오기
-    public List<GenderStatisticDTO> getTop7TotalPopulationByYear() {
-        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearOrderByTotalPopulationDesc();
+    public List<GenderStatisticDTO> getTop7(int year, int month) {
+        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
 
-        List<GenderStatisticDTO> result = genderStatistics.stream()
-                .map(o -> new GenderStatisticDTO(o))
-                .collect(toList());
-
-        return result;
+        return genderStatistics.stream()
+                .map(GenderStatisticDTO::new)
+                .collect(Collectors.toList());
 
     }
 

@@ -26,9 +26,9 @@ public class Gender_Statistic {
     private Integer total_population;
     private Integer previous_total_population;
     private BigDecimal total_increasement;
-    private BigDecimal male_population;
+    private Integer male_population;
     private BigDecimal male_ratio;
-    private BigDecimal female_population;
+    private Integer female_population;
     private BigDecimal female_ratio;
 
 

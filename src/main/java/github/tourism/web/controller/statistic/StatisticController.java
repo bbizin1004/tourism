@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,11 +20,12 @@ public class StatisticController {
 
     private final StatisticService statisticService;
 
-    //수정중.....
-    @GetMapping("/genderTop7PopulationByYear")
-    public ResponseEntity<List<GenderStatisticDTO>> getTopPopulationByYear() {
-        List<GenderStatisticDTO> genderStatistics = statisticService.getTop7TotalPopulationByYear();
+    @GetMapping("/genderTop7Population")
+    public ResponseEntity<List<GenderStatisticDTO>> getTop7Population(@RequestParam int year, @RequestParam int month) {
+
+        List<GenderStatisticDTO> genderStatistics = statisticService.getTop7(year, month);
         return ResponseEntity.ok(genderStatistics);
+
     }
 
 
