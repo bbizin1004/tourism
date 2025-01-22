@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -17,4 +18,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     // userId 로 결제내역 조회
     @Query("SELECT p FROM Payment p WHERE p.order.user.userId = :userId")
     List<Payment> findByUserId(@Param("userId") Integer userId);
+
+    Optional<Payment> findByImpUid(String impUid);
 }

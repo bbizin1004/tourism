@@ -18,7 +18,5 @@ public class PaymentResponseDTO {
     private BigDecimal totalAmount;
     private String message;
 
-
-
 }
 

@@ -19,6 +19,8 @@ public interface MapRepository extends JpaRepository<Map, Integer> {
     //카테고리별로 조회
     Page<Map> findByCategory(Pageable pageable, String category);
 
+    Optional<Map> findByCategory(String category);
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT m FROM Map m WHERE m.mapId = :mapId")
     Optional<Map> findWithLockById(@Param("mapId") Integer mapId);

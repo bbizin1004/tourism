@@ -2,6 +2,7 @@ package github.tourism.service.payment.imp;
 
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import github.tourism.web.dto.payment.PaymentRequestDTO;
@@ -44,6 +45,23 @@ public class IMPService {
 
         } catch (IamportResponseException | IOException e) {
             return new PaymentVerificationResponse(false, "결제 검증 실패: " + e.getMessage());
+        }
+
+    }
+
+    // 결제 취소
+    public void cancelPayment(String impUid, String reason) {
+        try {
+            CancelData cancelData = new CancelData(impUid,true);
+            cancelData.setReason(reason);
+
+            IamportResponse<Payment> response = iamportClient.cancelPaymentByImpUid(cancelData);
+
+            if (response.getResponse() == null || !"cancelled".equalsIgnoreCase(response.getResponse().getStatus())) {
+                throw new IllegalArgumentException("결제 취소 실패: " + (response.getMessage() != null? response.getMessage() : "알 수 없는 오류"));
+            }
+        }catch (IamportResponseException | IOException e) {
+            throw new RuntimeException("결제 취소 중 오류 발생: " + e.getMessage());
         }
 
     }

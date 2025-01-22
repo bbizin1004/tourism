@@ -15,8 +15,8 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     // Payment 와 연관된 주문을 조회
-    @Query("SELECT o FROM Order o JOIN Payment p ON o.orderId = p.order.orderId WHERE p.merchantUid = :merchantUid")
-    Optional<Order> findByMerchantUid(String merchantUid);
+//    @Query("SELECT o FROM Order o JOIN Payment p ON o.orderId = p.order.orderId WHERE p.merchantUid = :merchantUid")
+//    Optional<Order> findByMerchantUid(String merchantUid);
 
 
     // 특정 사용자의 특정 상태 주문 조회
