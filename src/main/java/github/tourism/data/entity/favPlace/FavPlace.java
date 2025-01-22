@@ -1,6 +1,7 @@
 package github.tourism.data.entity.favPlace;
 
 
+import github.tourism.data.entity.calendar.Calendar;
 import github.tourism.data.entity.map.Map;
 import github.tourism.data.entity.user.User;
 import jakarta.persistence.*;
@@ -8,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,6 +48,11 @@ public class FavPlace {
 
     @Column(name = "like_status")
     private Boolean likeStatus;
+
+    // 하나의 FavPlace가 여러 Calendar 항목에 해당할 수 있다.
+    @OneToMany(mappedBy = "favPlace", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Calendar> calendars = new ArrayList<>();
+
 
     //map과 user로 생성
     public FavPlace(Map map,User user){
