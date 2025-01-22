@@ -10,6 +10,7 @@ import github.tourism.data.repository.goods.GoodsRepository;
 import github.tourism.data.repository.order.OrderRepository;
 import github.tourism.data.repository.payment.PaymentRepository;
 import github.tourism.service.payment.imp.IMPService;
+import github.tourism.web.dto.order.OrderStatus;
 import github.tourism.web.dto.payment.*;
 import github.tourism.web.exception.PaymentProcessingException;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +35,17 @@ public class PaymentService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public PaymentResponseDTO processPayment(PaymentRequestDTO paymentRequestDTO) {
+    public PaymentResponseDTO processPayment(PaymentRequestDTO paymentRequestDTO,Integer userId) {
         Integer orderId = paymentRequestDTO.getOrderId();
 
         // 1. 주문 정보 가져오기
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
+
+        // 주문 소유자 권한 검증
+        if (!order.getUser().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("해당 주문에 대한 결제 권한이 없습니다.");
+        }
 
         // 2. 총 결제 금액 확인
         // BigDecimal -> 금액 계산시 오류 피하기 위해 사용 ! 정밀도가 높음
@@ -62,7 +68,7 @@ public class PaymentService {
         // 5. 결제 정보 저장
         Payment payment = savePayment(paymentRequestDTO,order);
 
-        // 6. 장바구니 비우기 -> 사용자가 선택한 상품이 지워지도록 설정해야함
+        // 6. 장바구니 비우기
         deleteCartItemsFromOrder(order);
 
         return new PaymentResponseDTO(paymentRequestDTO.getImpUid(),totalAmount,"결제 완료");
@@ -85,6 +91,11 @@ public class PaymentService {
 
     // 재고 감소
     private void reduceStock(Order order) {
+        // 결제가 된 주문에 대해서만 재고 감소
+        if (!order.getStatus().equals(OrderStatus.PAID)) {
+            throw new IllegalArgumentException("결제 완료된 주문만 재고 감소가 가능합니다.");
+        }
+
         order.getOrderItems().forEach(orderItem -> {
             Goods goods = goodsRepository.findByIdForUpdate(orderItem.getGoods().getGoodId())
                     .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
@@ -142,5 +153,58 @@ public class PaymentService {
             );
         }).collect(Collectors.toList());
     }
+
+    // 결제 취소 요청
+    @Transactional
+    public BigDecimal cancelPayment(String impUid, String reason,Integer userId) {
+
+        // 1. 결제 정보 조회
+        Payment payment = paymentRepository.findByImpUid(impUid)
+                .orElseThrow(() -> new IllegalArgumentException("해당 결제 impUid 를 찾을 수 없습니다."));
+
+        // 2. 결제 권한 검증
+        if (!payment.getOrder().getUser().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("결제 취소 권한이 없습니다.");
+        }
+
+        // 3. 이중 결제 취소 방지
+        if (payment.getPaymentStatus() == PaymentStatus.CANCEL) {
+            throw new IllegalArgumentException("이미 취소된 결제입니다.");
+        }
+
+        // 4. 포트원 결제 취소 요청
+        impService.cancelPayment(impUid,reason);
+
+        // 5. 재고 복구
+        restoreStock(payment.getOrder());
+
+        // 6. 결제 상태 업데이트
+        payment.setPaymentStatus(PaymentStatus.CANCEL);
+        paymentRepository.save(payment);
+
+        // 7. 주문 상태 변경
+        Order order = payment.getOrder();
+        order.setStatus(OrderStatus.CANCEL);
+        orderRepository.save(order);
+
+        return payment.getTotalPrice();
+
+    }
+
+    // 재고 복구 메서드
+    private void restoreStock(Order order) {
+        // 결제 상태가 CANCEL 인 경우만 재고 복구
+        if (!order.getStatus().equals(OrderStatus.CANCEL)) {
+            throw new IllegalArgumentException("결제 취소된 추문에 대해서만 재고 복구가 가능합니다.");
+        }
+
+        order.getOrderItems().forEach(orderItem -> {
+            Goods goods = goodsRepository.findByIdForUpdate(orderItem.getGoods().getGoodId())
+                    .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+            goods.setStockQuantity(goods.getStockQuantity() + orderItem.getQuantity());
+            goodsRepository.save(goods);
+        });
+    }
+
 }
 

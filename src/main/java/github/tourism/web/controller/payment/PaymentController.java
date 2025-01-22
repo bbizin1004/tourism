@@ -2,9 +2,7 @@ package github.tourism.web.controller.payment;
 
 import github.tourism.service.payment.PaymentService;
 import github.tourism.service.user.security.CustomUserDetails;
-import github.tourism.web.dto.payment.PaymentHistoryResponseDTO;
-import github.tourism.web.dto.payment.PaymentRequestDTO;
-import github.tourism.web.dto.payment.PaymentResponseDTO;
+import github.tourism.web.dto.payment.*;
 import github.tourism.web.exception.PaymentProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +31,8 @@ public class PaymentController {
                                                              @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         try {
             Integer userId = customUserDetails.getUserId();
-            paymentRequestDTO.setUserId(userId);
 
-            PaymentResponseDTO paymentResponseDTO = paymentService.processPayment(paymentRequestDTO);
+            PaymentResponseDTO paymentResponseDTO = paymentService.processPayment(paymentRequestDTO,userId);
             return ResponseEntity.status(HttpStatus.OK).body(paymentResponseDTO);
 
         }catch (IllegalArgumentException | PaymentProcessingException e) {
@@ -61,7 +58,32 @@ public class PaymentController {
         }
     }
 
-    // TODO : 결제내역 조회 -> 페이지나 필터링 써서 좀더 세분화 시켜놔야 함
+
+    // 결제 취소 요청
+    @DeleteMapping("/cancel/{impUid}")
+    public ResponseEntity<PaymentCancelResponseDTO> cancelPayment(@PathVariable String impUid,
+                                                                  @RequestBody cancelRequestDTO cancelRequestdto,
+                                                                  @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        try {
+            Integer userId = customUserDetails.getUserId();
+
+            // 결제 취소 처리
+            BigDecimal cancelledAmount =  paymentService.cancelPayment(impUid,cancelRequestdto.getReason(),userId);
+            PaymentCancelResponseDTO responseDTO = new PaymentCancelResponseDTO(
+                    "Success","결제 취소가 정상적으로 처리되었습니다.", impUid, cancelledAmount
+            );
+            return ResponseEntity.ok(responseDTO);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new PaymentCancelResponseDTO("Error", e.getMessage(),impUid,BigDecimal.ZERO)
+            );
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new PaymentCancelResponseDTO("Error","결제 취소 중 오류가 발생했습니다.",impUid,BigDecimal.ZERO)
+            );
+        }
+
+    }
 
 
 
