@@ -12,22 +12,18 @@ public class CalendarDetailsDTO {
     private String placeName;
     private LocalDateTime scheduleTime;
     private LocalDateTime scheduleEndTime;
-    private String placeImage;
-    private String placeLocation;
     private String memo;
     private String favPlaceName; // FavPlace에서 가져온 이름
     private String favPlaceImage; // FavPlace에서 가져온 이미지
     private String favPlaceLocation; // FavPlace에서 가져온 위치
 
     public CalendarDetailsDTO(Integer calendarDetailsId, String placeName, LocalDateTime scheduleTime,
-                              LocalDateTime scheduleEndTime, String placeImage, String placeLocation,
+                              LocalDateTime scheduleEndTime,
                               String memo, String favPlaceName, String favPlaceImage, String favPlaceLocation) {
         this.calendarDetailsId = calendarDetailsId;
         this.placeName = placeName;
         this.scheduleTime = scheduleTime;
         this.scheduleEndTime = scheduleEndTime;
-        this.placeImage = placeImage;
-        this.placeLocation = placeLocation;
         this.memo = memo;
         this.favPlaceName = favPlaceName;
         this.favPlaceImage = favPlaceImage;

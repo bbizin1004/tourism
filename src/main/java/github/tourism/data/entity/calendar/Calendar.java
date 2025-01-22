@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -51,4 +52,6 @@ public class Calendar {
     @Column(name = "memo")
     private String memo ;
 
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CalendarDetails> calendarDetailsList;
 }

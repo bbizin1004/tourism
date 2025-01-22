@@ -1,8 +1,8 @@
 package github.tourism.web.controller.calendar;
 
-import github.tourism.data.entity.calendar.CalendarDetails;
 import github.tourism.service.calendar.CalendarDetailsService;
 import github.tourism.web.dto.calendar.CalendarDetailsDTO;
+import github.tourism.web.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +27,43 @@ public class CalendarDetailsController {
 
             // 해당 날짜에 등록된 일정 조회
             List<CalendarDetailsDTO> calendarDetailsList = calendarDetailsService.getCalendarDetailsByUserAndDate(userId, startDate);
-            return ResponseEntity.ok(calendarDetailsList);
+            return calendarDetailsList.isEmpty()
+                    ? ResponseEntity.noContent().build()
+                    : ResponseEntity.ok(calendarDetailsList);
 
+        } catch (DateTimeParseException e) {
+            // 잘못된 날짜 형식 예외 처리
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    @GetMapping("/all/{userId}")
+    public ResponseEntity<List<CalendarDetailsDTO>> getAllSchedulesByUser(
+            @PathVariable int userId) {
+        try {
+            // 해당 날짜에 등록된 일정 조회
+            List<CalendarDetailsDTO> calendarDetailsList = calendarDetailsService.getCalendarDetailsByUser(userId);
+            return calendarDetailsList.isEmpty()
+                    ? ResponseEntity.noContent().build()
+                    : ResponseEntity.ok(calendarDetailsList);
+
+        } catch (DateTimeParseException e) {
+            // 잘못된 날짜 형식 예외 처리
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @DeleteMapping("/{calendarId}")
+    public ResponseEntity<String> deleteScheduleByUser(
+            @PathVariable int calendarId,
+            @RequestParam int userId) {
+        try {
+            // 해당 날짜에 등록된 일정 조회
+            try {
+                calendarDetailsService.deleteCalendarDetailsByUserIdAndCalendarId(userId, calendarId);
+            } catch (NotFoundException e) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok("Entry deleted successfully");
         } catch (DateTimeParseException e) {
             // 잘못된 날짜 형식 예외 처리
             return ResponseEntity.badRequest().body(null);

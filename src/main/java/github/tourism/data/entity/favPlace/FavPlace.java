@@ -64,7 +64,6 @@ public class FavPlace {
         this.placeDetailsInfo = map.getPlace_info();
         //이제 찜인지?? 좋아요인지?? 용도가 머지??
         this.likeStatus = false;
-
     }
 
 }
