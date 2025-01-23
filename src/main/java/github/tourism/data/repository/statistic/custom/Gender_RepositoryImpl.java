@@ -5,7 +5,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import github.tourism.data.entity.statistic.Gender_Statistic;
 import github.tourism.web.dto.statistic.GenderTop7ByYearAndMonthDTO;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Tuple;
 
 import java.util.List;
 

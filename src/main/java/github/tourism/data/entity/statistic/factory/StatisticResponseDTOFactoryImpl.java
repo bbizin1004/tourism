@@ -4,10 +4,7 @@ import github.tourism.data.entity.statistic.Gender_Statistic;
 import github.tourism.data.entity.statistic.Purpose_Statistic;
 import github.tourism.data.entity.statistic.RankPlace;
 import github.tourism.data.entity.statistic.VisitList;
-import github.tourism.web.dto.statistic.GenderResponseDTO;
-import github.tourism.web.dto.statistic.PurposeResponseDTO;
-import github.tourism.web.dto.statistic.RankPlaceResponseDTO;
-import github.tourism.web.dto.statistic.VisitListResponseDTO;
+import github.tourism.web.dto.statistic.*;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -50,6 +47,21 @@ public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFact
         dto.setStudyRatio(statistic.getStudy_ratio());
         dto.setEtcPopulation(statistic.getEtc_population());
         dto.setEtcRatio(statistic.getEtc_ratio());
+        return dto;
+    }
+
+    @Override
+    public PurposeTop7ResponseDTO createPurposeTop7ResponseDTO(Purpose_Statistic statistic) {
+        PurposeTop7ResponseDTO dto = new PurposeTop7ResponseDTO();
+        dto.setYear(statistic.getYear());
+        dto.setMonth(statistic.getMonth());
+        dto.setCountry(statistic.getCountry());
+        dto.setTotalPopulation(statistic.getTotal_population());
+        dto.setTravelPopulation(statistic.getTravel_population());
+        dto.setCommercialPopulation(statistic.getCommercial_population());
+        dto.setPublicPopulation(statistic.getPublic_population());
+        dto.setStudyPopulation(statistic.getStudy_population());
+        dto.setEtcPopulation(statistic.getEtc_population());
         return dto;
     }
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "purpose_all_combined")
+@Table(name = "purpose_combined")
 public class Purpose_Statistic {
 
     @Id
