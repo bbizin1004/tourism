@@ -3,11 +3,9 @@ package github.tourism.service.statistic;
 import github.tourism.config.util.webSocket.WebSocketController;
 import github.tourism.data.entity.map.Map;
 import github.tourism.data.entity.statistic.Statistic;
-import github.tourism.data.entity.user.User;
+import github.tourism.data.entity.statistic.factory.StatisticFactory;
 import github.tourism.data.repository.map.MapRepository;
 import github.tourism.data.repository.statistic.UserStatisticRepository;
-import github.tourism.data.repository.user.UserRepository;
-import github.tourism.service.favPlace.FavPlaceService;
 import github.tourism.web.advice.ErrorCode;
 import github.tourism.web.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +23,7 @@ public class UserStatisticService {
     private final UserStatisticRepository userStatisticRepository;
     private final MapRepository mapRepository;
     private final WebSocketController webSocketController;
+    private final StatisticFactory statisticFactory;
 
     @Transactional
     public Statistic updatePlaceAndLikeCount(String category) {
@@ -32,7 +31,7 @@ public class UserStatisticService {
                 .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_SAVED_PLACE));
 
         Statistic statistic = userStatisticRepository.findByMapId(map.getMapId())
-                .orElse(createStatistic(map));
+                .orElse(statisticFactory.createStatistic(map));
 
         userStatisticRepository.save(statistic);
 
@@ -42,17 +41,6 @@ public class UserStatisticService {
         webSocketController.sendTopStatisticsUpdate(topStatistics);
 
         return statistic;
-    }
-
-    private Statistic createStatistic(Map map) {
-        return Statistic.builder()
-                .mapId(map.getMapId())
-                .placeName(map.getPlace_name())
-                .placeLikeNum(map.getLikemarkCount())
-                .placeImage(map.getPlace_image())
-                .category(map.getCategory())
-                .userRanking(0)
-                .build();
     }
 
     private void updateRankings() {

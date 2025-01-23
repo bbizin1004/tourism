@@ -24,7 +24,8 @@ public class Purpose_Statistic {
     private String country;
     private Integer total_population;
     private Integer previous_total_population;
-    private Double total_increasement;
+    @Column(name = "total_increasement")
+    private Double total_increment;
     private Double total_ratio;
     private Integer travel_population;
     private Double travel_ratio;

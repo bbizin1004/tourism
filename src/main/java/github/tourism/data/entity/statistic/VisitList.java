@@ -3,7 +3,7 @@ package github.tourism.data.entity.statistic;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user_statics")
+@RequestMapping("/statistic/user")
 public class UserStatisticController {
     private final UserStatisticService userStatisticService;
     private final WebSocketController webSocketController;
