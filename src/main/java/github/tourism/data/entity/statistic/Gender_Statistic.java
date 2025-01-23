@@ -27,7 +27,6 @@ public class Gender_Statistic {
     private Integer previous_total_population;
     @Column(name = "total_increasement")
     private BigDecimal total_increment;
-    private BigDecimal male_population;
     private Integer male_population;
     private BigDecimal male_ratio;
     private Integer female_population;
