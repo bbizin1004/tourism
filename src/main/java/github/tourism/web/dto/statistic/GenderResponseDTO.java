@@ -17,8 +17,8 @@ public class GenderResponseDTO {
     private Integer totalPopulation;
     private Integer previousTotalPopulation;
     private BigDecimal totalIncrement;
-    private BigDecimal malePopulation;
+    private Integer malePopulation;
     private BigDecimal maleRatio;
-    private BigDecimal femalePopulation;
+    private Integer femalePopulation;
     private BigDecimal femaleRatio;
 }

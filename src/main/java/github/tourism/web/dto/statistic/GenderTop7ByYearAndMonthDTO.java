@@ -1,13 +1,13 @@
 package github.tourism.web.dto.statistic;
 
+import com.querydsl.core.annotations.QueryProjection;
 import github.tourism.data.entity.statistic.Gender_Statistic;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-public class GenderStatisticDTO {
-    private Integer id;
+@NoArgsConstructor
+public class GenderTop7ByYearAndMonthDTO {
     private int year;
     private int month;
     private String country;
@@ -16,9 +16,7 @@ public class GenderStatisticDTO {
     private int femalePopulation;
 
 
-
-    public GenderStatisticDTO(Gender_Statistic statistic) {
-        this.id = statistic.getId();
+    public GenderTop7ByYearAndMonthDTO(Gender_Statistic statistic) {
         this.year = statistic.getYear();
         this.month = statistic.getMonth();
         this.country = statistic.getCountry();
@@ -27,5 +25,11 @@ public class GenderStatisticDTO {
         this.femalePopulation = statistic.getFemale_population();
     }
 
-
+    public GenderTop7ByYearAndMonthDTO(int year, String country, int totalPopulation, int malePopulation, int femalePopulation) {
+        this.year = year;
+        this.country = country;
+        this.totalPopulation = totalPopulation;
+        this.malePopulation = malePopulation;
+        this.femalePopulation = femalePopulation;
+    }
 }

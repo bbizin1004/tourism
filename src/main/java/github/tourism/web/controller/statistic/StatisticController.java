@@ -1,7 +1,6 @@
 package github.tourism.web.controller.statistic;
 
 
-import github.tourism.data.entity.statistic.Gender_Statistic;
 import github.tourism.service.statistic.StatisticService;
 import github.tourism.web.advice.ApiResponse;
 import github.tourism.web.dto.statistic.*;
@@ -33,14 +32,32 @@ public class StatisticController {
         }
     }
 
+    //연도와 월에 따라 방문인구 많은순으로 상위 7개 나라 조회
     @GetMapping("/genderTop7Population")
-    public ResponseEntity<List<GenderStatisticDTO>> getTop7Population(@RequestParam int year, @RequestParam int month) {
-
-        List<GenderStatisticDTO> genderStatistics = statisticService.getTop7(year, month);
-        return ResponseEntity.ok(genderStatistics);
-
-
+    public ResponseEntity<ApiResponse<List<GenderTop7ByYearAndMonthDTO>>> getTop7Population(
+            @RequestParam int year, @RequestParam int month) {
+        try {
+            List<GenderTop7ByYearAndMonthDTO> genderStatistics = statisticService.getTop7(year, month);
+            return ResponseEntity.ok(ApiResponse.onSuccess(genderStatistics));
+        }   catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
+        }
     }
+
+    //연도별 나라의 총방문객수 상위7개 합산 데이터 조회
+    @GetMapping("/genderTop7ByYear")
+    public ResponseEntity<ApiResponse<List<GenderTop7ByYearAndMonthDTO>>> getTop7CountriesByYear(
+            @RequestParam int year) {
+        try {
+            List<GenderTop7ByYearAndMonthDTO> top7ByYear = statisticService.getTop7ByYear(year);
+            return ResponseEntity.ok(ApiResponse.onSuccess(top7ByYear));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
+        }
+    }
+
+
+
 
     @GetMapping("/purpose")
     public ResponseEntity<ApiResponse<List<PurposeResponseDTO>>> showPurposeStatistic() {
@@ -72,14 +89,5 @@ public class StatisticController {
         }
     }
 
-    @GetMapping("/genderTop7PopulationByYear")
-    public ResponseEntity<ApiResponse<List<GenderStatisticDTO>>> getTopPopulationByYear() {
-        try {
-            List<GenderStatisticDTO> genderStatistics = statisticService.getTop7TotalPopulationByYear();
-            return ResponseEntity.ok(ApiResponse.onSuccess(genderStatistics));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
-        }
-    }
 
 }
