@@ -28,8 +28,9 @@ public class Gender_Statistic {
     @Column(name = "total_increasement")
     private BigDecimal total_increment;
     private BigDecimal male_population;
+    private Integer male_population;
     private BigDecimal male_ratio;
-    private BigDecimal female_population;
+    private Integer female_population;
     private BigDecimal female_ratio;
 
 }

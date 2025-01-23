@@ -61,13 +61,12 @@ public class StatisticService {
                 .collect(Collectors.toList());
     }
     //연도에따라 상위7개 총인구 순위 가져오기
-    public List<GenderStatisticDTO> getTop7TotalPopulationByYear() {
-        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearOrderByTotalPopulationDesc();
+    public List<GenderStatisticDTO> getTop7(int year, int month) {
+        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
 
         return genderStatistics.stream()
                 .map(GenderStatisticDTO::new)
-                .collect(toList());
-
+                .collect(Collectors.toList());
     }
 
 }

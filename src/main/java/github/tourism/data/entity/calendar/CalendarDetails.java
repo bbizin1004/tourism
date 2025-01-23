@@ -20,8 +20,13 @@ public class CalendarDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer calendarDetailsId ;
 
-    @Column(name = "calendar_id")
-    private Integer calendarId ;
+    // Calendar 엔티티와 연관된 외래 키를 참조
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "calendar_id", referencedColumnName = "calendar_id", insertable = false, updatable = false)
+    private Calendar calendar;
+
+//    @Column(name = "calendar_id")
+//    private Integer calendarId ;
 
     @Column(name = "place_name")
     private String placeName ;
@@ -29,29 +34,17 @@ public class CalendarDetails {
     @Column(name = "place_image")
     private String placeImage ;
 
-    @Column(name = "operation_time")
-    private String operationTime ;
-
-    @Column(name = "operation_date")
-    private String operationDate ;
-
-    @Column(name = "day_off")
-    private String dayOff ;
-
     @Column(name = "place_location")
     private String placeLocation ;
 
-    @Column(name = "place_contact_num")
-    private String placeContactNum ;
+//    @Column(name = "place_contact_num")
+//    private String placeContactNum ;
 
-    @Column(name = "place_details_info")
-    private String placeDetailsInfo ;
+    @Column(name = "schedule_time")
+    private LocalDateTime scheduleTime ;
 
-//    @Column(name = "schedule_time")
-//    private String scheduleTime ;
-
-    @Column(name = "schedule_date")
-    private LocalDateTime scheduleDate ;
+    @Column(name = "schedule_end_time")
+    private LocalDateTime scheduleEndTime ;
 
     @Column(name = "memo")
     private String memo ;

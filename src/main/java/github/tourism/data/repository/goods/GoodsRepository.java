@@ -24,5 +24,5 @@ public interface GoodsRepository extends JpaRepository<Goods, Integer> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT g FROM Goods g WHERE g.goodId = :goodId")
-    Optional<Goods> findByIdForUpdate(Integer goodId);
+    Optional<Goods> findByIdForUpdate(@Param("goodId") Integer goodId);
 }
