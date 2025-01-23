@@ -15,7 +15,6 @@ public class GenderTop7ByYearAndMonthDTO {
     private int malePopulation;
     private int femalePopulation;
 
-
     public GenderTop7ByYearAndMonthDTO(Gender_Statistic statistic) {
         this.year = statistic.getYear();
         this.month = statistic.getMonth();
