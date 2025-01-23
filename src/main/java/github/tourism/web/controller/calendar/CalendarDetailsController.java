@@ -17,6 +17,7 @@ import java.util.List;
 public class CalendarDetailsController {
     private final CalendarDetailsService calendarDetailsService;
 
+// userId & tourStartDate를 기반으로 캘린더 세부정보 조회
     @GetMapping("/{userId}")
     public ResponseEntity<List<CalendarDetailsDTO>> getSchedulesByDate(
             @PathVariable int userId,
@@ -36,6 +37,8 @@ public class CalendarDetailsController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
+    // userId를 기반으로 캘린더 세부정보 조회
     @GetMapping("/all/{userId}")
     public ResponseEntity<List<CalendarDetailsDTO>> getAllSchedulesByUser(
             @PathVariable int userId) {
@@ -52,6 +55,7 @@ public class CalendarDetailsController {
         }
     }
 
+// calendarId & userId 기반으로 캘린더 삭제
     @DeleteMapping("/{calendarId}")
     public ResponseEntity<String> deleteScheduleByUser(
             @PathVariable int calendarId,
@@ -70,7 +74,7 @@ public class CalendarDetailsController {
         }
     }
 
-
+}
 
 
 //    // 1. 특정 캘린더의 상세 정보 조회
@@ -97,4 +101,4 @@ public class CalendarDetailsController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 //        }
 //    }
-}
+
