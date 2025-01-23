@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,12 +29,24 @@ public class StatisticService {
 
     private final StatisticResponseDTOFactory statisticResponseDTOFactory;
 
-    // 성별 통계 전체 조회
+    // 성별테이블 통계 전체 조회
     public List<GenderResponseDTO> getGenderStatistics() {
         List<Gender_Statistic> genderStatistics = gender_Repository.findAll();
         return genderStatistics.stream()
                 .map(statisticResponseDTOFactory::createGenderResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    //성별테이블에서 연도와 월에따라 상위7개 총인구 순위 조회
+    public List<GenderTop7ByYearAndMonthDTO> getTop7(int year, int month) {
+        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
+        return genderStatistics.stream()
+                .map(GenderTop7ByYearAndMonthDTO::new)
+                .collect(Collectors.toList());
+    }
+    //성별테이블에서 연도에 따라 각나라의 총 월 방문객수를 합산하여 총 방문객,총 성별 방문객을 조회
+    public List<GenderTop7ByYearAndMonthDTO> getTop7ByYear(int year) {
+        return gender_Repository.findTop7CountriesByYear(year);
     }
 
     // 목적 통계 전체 조회
@@ -60,13 +70,6 @@ public class StatisticService {
                 .map(statisticResponseDTOFactory::createVisitListResponseDTO)
                 .collect(Collectors.toList());
     }
-    //연도와 월에따라 상위7개 총인구 순위 가져오기
-    public List<GenderStatisticDTO> getTop7(int year, int month) {
-        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
 
-        return genderStatistics.stream()
-                .map(GenderStatisticDTO::new)
-                .collect(Collectors.toList());
-    }
 
 }

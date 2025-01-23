@@ -8,7 +8,9 @@ import github.tourism.web.dto.statistic.GenderResponseDTO;
 import github.tourism.web.dto.statistic.PurposeResponseDTO;
 import github.tourism.web.dto.statistic.RankPlaceResponseDTO;
 import github.tourism.web.dto.statistic.VisitListResponseDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFactory {
     @Override
     public GenderResponseDTO createGenderResponseDTO(Gender_Statistic statistic) {
