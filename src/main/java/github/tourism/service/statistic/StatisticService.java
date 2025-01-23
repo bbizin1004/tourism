@@ -60,7 +60,7 @@ public class StatisticService {
                 .map(statisticResponseDTOFactory::createVisitListResponseDTO)
                 .collect(Collectors.toList());
     }
-    //연도에따라 상위7개 총인구 순위 가져오기
+    //연도와 월에따라 상위7개 총인구 순위 가져오기
     public List<GenderStatisticDTO> getTop7(int year, int month) {
         List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
 
