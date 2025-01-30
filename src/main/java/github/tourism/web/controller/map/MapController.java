@@ -1,6 +1,5 @@
 package github.tourism.web.controller.map;
 
-import github.tourism.service.favPlace.FavPlaceService;
 import github.tourism.service.map.MapService;
 import github.tourism.service.user.security.CustomUserDetails;
 import github.tourism.web.dto.map.MapDetailsDTO;
@@ -14,9 +13,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/maps")
+@RequestMapping("/api/maps")
 public class MapController {
 
     private final MapService mapService;
@@ -24,17 +26,24 @@ public class MapController {
 
     //전체 관광지 조회
     @GetMapping
-    public ResponseEntity<PagedModel<MapsDTO>> getAllMaps(
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size)
+    public ResponseEntity<Map<String,Object>> getAllMaps(
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size)
     {
         Page<MapsDTO> allMaps = mapService.getAllMaps(page, size);
-        return ResponseEntity.ok(new PagedModel<>(allMaps));
+
+        //프론트측에서 요청한 양식대로 변경
+        Map<String, Object> response = new HashMap<>();
+        response.put("totalPages", allMaps.getTotalPages());
+        response.put("currentPage", allMaps.getNumber());
+        response.put("maps", allMaps.getContent());
+
+        return ResponseEntity.ok(response);
     }
 
     //카테고리별로 조회
     @GetMapping("/category/{category}")
     public ResponseEntity<PagedModel<MapsDTO>> getMapsByCategory(
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size,
             @PathVariable String category) {
         Page<MapsDTO> mapsByCategory = mapService.getMapsByCategory(page, size, category);
         return ResponseEntity.ok(new PagedModel<>(mapsByCategory));

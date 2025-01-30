@@ -7,19 +7,18 @@ import lombok.Data;
 @Data
 public class MapsDTO {
 
-    private int mapId;
-    private String place_Name;
+    private int map_id;
+    private String place_name;
     private String place_image;
-    private String place_info;
     private String place_location;
-    private String category;
+    //프론트 쪽에서 미구현
+//    private String category;
 
     public MapsDTO(Map map) {
-        this.mapId = map.getMapId();
-        this.place_Name = map.getPlace_name();
+        this.map_id = map.getMapId();
+        this.place_name = map.getPlace_name();
         this.place_image = map.getPlace_image();
-        this.place_info = map.getPlace_info();
         this.place_location = map.getPlace_location();
-        this.category = map.getCategory();
+//        this.category = map.getCategory();
     }
 }

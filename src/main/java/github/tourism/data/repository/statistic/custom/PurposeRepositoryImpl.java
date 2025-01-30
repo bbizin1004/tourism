@@ -3,14 +3,12 @@ package github.tourism.data.repository.statistic.custom;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import github.tourism.data.entity.statistic.Purpose_Statistic;
-import github.tourism.data.entity.statistic.QGender_Statistic;
-import github.tourism.data.entity.statistic.QPurpose_Statistic;
 import github.tourism.web.dto.statistic.PurposeTop7ResponseDTO;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-import static github.tourism.data.entity.statistic.QPurpose_Statistic.*;
+import static github.tourism.data.entity.statistic.QPurpose_Statistic.purpose_Statistic;
 
 public class PurposeRepositoryImpl implements PurposeRepositoryCustom{
 
