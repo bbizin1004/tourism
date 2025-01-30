@@ -2,6 +2,7 @@ package github.tourism.service.goods;
 
 import github.tourism.data.entity.goods.Goods;
 import github.tourism.data.repository.goods.GoodsRepository;
+import github.tourism.web.dto.goods.GoodDetailResponse;
 import github.tourism.web.dto.goods.GoodsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,8 +32,7 @@ public class GoodsService {
                 goods.getGoodId(),
                 goods.getGoodsImage(),
                 goods.getGoodsName(),
-                goods.getPrice(),
-                goods.getSummary()
+                goods.getPrice()
         );
     }
 
@@ -45,9 +45,9 @@ public class GoodsService {
 
     }
 
-    public Goods getGoodsDetail(Integer goodId) {
-        Goods goods = goodsRepository.findById(goodId).orElse(null);
-        return goods;
+    public GoodDetailResponse getGoodsDetail(Integer goodId) {
+        Goods goods = goodsRepository.findById(goodId).orElseThrow(() -> new IllegalArgumentException("해당 상품을 찾을 수 없습니다."));
+        return GoodDetailResponse.from(goods);
     }
 
     public Page<GoodsResponse> getGoodsByCategory(int page, int size, String category) {

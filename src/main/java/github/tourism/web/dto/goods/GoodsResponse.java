@@ -13,7 +13,7 @@ public class GoodsResponse {
     private String goodsImage;
     private String goodsName;
     private Integer goodsPrice;
-    private String goodsDescription;
+    //private String goodsDescription;
 
 
 }

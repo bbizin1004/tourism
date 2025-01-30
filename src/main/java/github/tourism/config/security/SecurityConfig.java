@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/resources/static/**","/auth/login","/auth/signup", "/auth/email",
                                 "/books","/books/{id}","/books/category/{category}"
-                                ,"/v3/api-docs/**", "/swagger-ui/**","/goods/**"
+                                ,"/v3/api-docs/**", "/swagger-ui/**","/api/goods/**"
                         ).permitAll()
                         .requestMatchers("/auth/secession", "/cart/**","/orders/**" ,"/api/mypage/**", "/payment/**").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated()
