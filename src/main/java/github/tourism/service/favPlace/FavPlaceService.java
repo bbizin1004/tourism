@@ -55,7 +55,7 @@ public class FavPlaceService {
         favPlace.setPlaceName(map.getPlace_name());
         favPlace.setPlaceLocation(map.getPlace_location());
         favPlace.setPlaceImage(map.getPlace_image());
-        favPlace.setPlaceDetailsInfo(map.getPlace_info());
+//        favPlace.setPlaceDetailsInfo(map.getPlace_info());
         favPlace.setLikeStatus(true);
 //        favPlace.setLikemarkCount(0); // 초기값 설정
         favPlaceRepository.save(favPlace);
