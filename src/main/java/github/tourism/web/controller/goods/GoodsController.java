@@ -2,6 +2,7 @@ package github.tourism.web.controller.goods;
 
 import github.tourism.data.entity.goods.Goods;
 import github.tourism.service.goods.GoodsService;
+import github.tourism.web.dto.goods.GoodDetailResponse;
 import github.tourism.web.dto.goods.GoodsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/goods")
+@RequestMapping("/api/goods")
 public class GoodsController {
 
     private final GoodsService goodsService;
@@ -36,10 +37,10 @@ public class GoodsController {
     }
 
     // 굿즈 상세조회
-    @GetMapping("/details/{goodId}")
-    public ResponseEntity<Goods> getGoodsDetail(@PathVariable Integer goodId) {
-        Goods goods =  goodsService.getGoodsDetail(goodId);
-        return ResponseEntity.ok(goods);
+    @GetMapping("/{goodId}")
+    public ResponseEntity<GoodDetailResponse> getGoodsDetail(@PathVariable Integer goodId) {
+        GoodDetailResponse goodsDetail =  goodsService.getGoodsDetail(goodId);
+        return ResponseEntity.ok(goodsDetail);
     }
 
     // 굿즈 카테고리별 조회
