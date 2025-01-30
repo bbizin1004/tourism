@@ -1,7 +1,10 @@
 package github.tourism.web.controller.calendar;
 
 import github.tourism.data.entity.calendar.Calendar;
+import github.tourism.data.entity.map.Map;
+import github.tourism.service.calendar.CalendarDetailsService;
 import github.tourism.service.calendar.CalendarService;
+import github.tourism.web.dto.calendar.CalendarRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -18,43 +23,31 @@ import java.util.List;
 public class CalendarController {
 
     private final CalendarService calendarService;
+    private final CalendarDetailsService calendarDetailsService;
 
-//    캘린더 날짜 범위 데이터 가져오기
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<Calendar>> getUserCalendar(
-            @PathVariable int userId,
-            @RequestParam String startDate,
-            @RequestParam String endDate) {
-        try {
-            // Parse the start and end dates
-            LocalDate start = LocalDate.parse(startDate);
-            LocalDate end = LocalDate.parse(endDate);
-
-            // Convert to LocalDateTime at the start of the day
-            LocalDateTime startTime = LocalDate.parse(startDate).atStartOfDay();
-            LocalDateTime endTime = LocalDate.parse(endDate).atStartOfDay().plusDays(1);
-            // Fetch the calendar entries based on the user and date range
-            List<Calendar> calendars = calendarService.getCalendarEntries(userId, startTime, endTime);
-            return ResponseEntity.ok(calendars);
-
-        } catch (DateTimeParseException e) {
-            // Return bad request if dates are invalid
-            return ResponseEntity.badRequest().body(null);
-        }
+    // 단일 또는 여러 개의 캘린더 항목(여행 일정) 등록
+    // 단일 캘린더 생성
+    @PostMapping("/single")
+    public ResponseEntity<Calendar> createSingleCalendar(@RequestBody CalendarRequestDTO calendarRequestDTO) {
+        Calendar createdCalendar = calendarService.createSingleCalendar(calendarRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCalendar);
     }
 
-    // 캘린더 생성
-    @PostMapping
-    public ResponseEntity<Calendar> createCalendar(@RequestBody Calendar calendar) {
-        try {
-            // Create the new calendar entry
-            Calendar createdCalendar = calendarService.createCalendar(calendar);
-            // Return the created calendar with a 201 status code
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCalendar);
-        } catch (Exception e) {
-            // If any error occurs during creation, return a bad request
-            return ResponseEntity.badRequest().body(null);
-        }
+    // 여러 캘린더 생성
+    @PostMapping("/multiple")
+    public ResponseEntity<List<Calendar>> createMultipleCalendars(@RequestBody List<CalendarRequestDTO> calendarRequestDTOS) {
+        List<Calendar> createdCalendars = calendarService.createMultipleCalendars(calendarRequestDTOS);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCalendars);
+    }
+
+    //  특정 사용자가 등록한 모든 여행 날짜 반환
+    @GetMapping("/dates/{userId}")
+    public ResponseEntity<List<LocalDate>> getDistinctDatesByUserId(
+            @PathVariable int userId) {
+        List<LocalDate> dates = calendarDetailsService.getDistinctTourStartDatesByUserId(userId);
+        return dates.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(dates);
     }
 }
 

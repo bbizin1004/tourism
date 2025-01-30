@@ -19,7 +19,6 @@ public class GoodsService {
 
     private final GoodsRepository goodsRepository;
 
-
     public Page<GoodsResponse> getAllGoods(int page,int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Goods> goodsPage = goodsRepository.findAll(pageable);

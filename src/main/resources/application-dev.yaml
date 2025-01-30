@@ -20,7 +20,7 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://13.211.227.103/tourism?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://ec2-13-211-227-103.ap-southeast-2.compute.amazonaws.com:3306/tourism?useUnicode=true&characterEncoding=UTF-8
 #    url: jdbc:mariadb://mariadb.cjq82ikaejvr.ap-northeast-2.rds.amazonaws.com:3306/project2?useUnicode=true&characterEncoding=UTF-8
 #    url: jdbc:mysql://localhost:3306/tourism?useUnicode=true&characterEncoding=UTF-8
   jpa:

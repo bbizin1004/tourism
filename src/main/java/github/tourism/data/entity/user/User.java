@@ -1,5 +1,6 @@
 package github.tourism.data.entity.user;
 
+import github.tourism.data.entity.favPlace.FavPlace;
 import github.tourism.web.advice.ErrorCode;
 import github.tourism.web.dto.user.sign.Authority;
 import github.tourism.web.exception.InvalidValueException;
@@ -11,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,6 +26,7 @@ import java.util.Set;
 @Builder
 @ToString
 public class User {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,13 +60,13 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Builder.Default
-    @Transient
-    private Set<Authority> authorities = Set.of(Authority.ROLE_USER);
 
-    public void User(Integer userId) {
-    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Roles role;
 
+    @OneToMany(mappedBy = "user")
+    private List<FavPlace> favPlaces = new ArrayList<>();
 
     public void deleteUser() {
         this.deletedAt = LocalDateTime.now();
@@ -92,7 +96,7 @@ public class User {
 
     public void updateGender(String gender) {
         if (gender != null  && !gender.isEmpty()) {
-            if(gender.length() == 1){
+            if(gender.equals("M") || gender.equals("F")){
                 this.gender = gender;
             }else{
                 throw new InvalidValueException(ErrorCode.FAILURE_GENDER);

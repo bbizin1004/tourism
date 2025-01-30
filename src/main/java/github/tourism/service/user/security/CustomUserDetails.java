@@ -8,13 +8,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 public class CustomUserDetails implements UserDetails {
 
@@ -22,20 +23,19 @@ public class CustomUserDetails implements UserDetails {
     private String email;
     private String password;
     private String userName;
-    private Set<Authority> authorities;
+    private List<String> authorities;
 
     public Integer getUserId() {
         return userId;
     }
 
+    public String getUserName() {return userName;}
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities.stream().map(Authority::name).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        return authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
-    public Set<Authority> getAuthoritySet() {
-        return authorities;
-    }
     @Override
     public String getPassword() {
         return this.password;
