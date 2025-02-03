@@ -52,6 +52,6 @@ public class Calendar {
     @Column(name = "memo")
     private String memo ;
 
-    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CalendarDetails> calendarDetailsList;
 }

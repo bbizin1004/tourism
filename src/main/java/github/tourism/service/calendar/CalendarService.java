@@ -34,6 +34,12 @@ public class CalendarService {
     @Transactional
     public Calendar createSingleCalendar(CalendarRequestDTO dto) {
         validateCalendarDTO(dto);
+
+        // 중복 일정 체크!
+        if (calendarRepository.existsByUserAndTourStartDateAndTime(dto.getUserId(), dto.getTourStartDate(), dto.getScheduleTime())) {
+            throw new IllegalArgumentException("이미 해당 시간에 일정이 존재합니다.");
+        }
+
         Calendar calendar = convertToEntity(dto);
         return calendarRepository.save(calendar);
     }
@@ -54,11 +60,13 @@ public class CalendarService {
     }
 
     // DTO 검증
+    // 일정 생성 시 유효성 검증
     private void validateCalendarDTO(CalendarRequestDTO calendarRequestDTO) {
         if (calendarRequestDTO.getUserId() == null || calendarRequestDTO.getTourStartDate() == null ||
                 calendarRequestDTO.getScheduleTime() == null || calendarRequestDTO.getScheduleEndTime() == null) {
             throw new IllegalArgumentException("필수 정보가 누락되었습니다.");
         }
+        // 시작 시간이 종료 시간보다 이후인지 체크
         if (calendarRequestDTO.getScheduleTime().isAfter(calendarRequestDTO.getScheduleEndTime())) {
             throw new IllegalArgumentException("일정 시작 시간이 종료 시간보다 이후일 수 없습니다.");
         }
