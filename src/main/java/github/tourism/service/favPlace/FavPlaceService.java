@@ -39,8 +39,8 @@ public class FavPlaceService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다. ID: " + userId));
 
-        // Map 데이터베이스에서 조회
-        Map map = mapRepository.findById(mapId)
+        // Map 데이터베이스에서 조회 with Pessimistic Lock
+        Map map = mapRepository.findWithLockById(mapId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 장소입니다. ID: " + mapId));
 
         // 중복 찜 방지
@@ -58,6 +58,7 @@ public class FavPlaceService {
 //        favPlace.setPlaceDetailsInfo(map.getPlace_info());
         favPlace.setLikeStatus(true);
 //        favPlace.setLikemarkCount(0); // 초기값 설정
+
         favPlaceRepository.save(favPlace);
 
         // 장소를 다른 사용자가 찜했으므로 likemarkCount 증가
