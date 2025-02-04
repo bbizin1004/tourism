@@ -71,21 +71,24 @@ public class StatisticController {
 
     //목적통계-월별 탑7 나라 조회
     @GetMapping("/purposeTop7ByMonth")
-    public ResponseEntity<ApiResponse<List<PurposeTop7ResponseDTO>>> getPurposeTop7ByMonth(
+    public ResponseEntity<PurposeTop7ResponseDTO> getPurposeTop7ByMonth(
             @RequestParam int year, @RequestParam int month) {
+
+        //프론트엔드 API 요청 양식에 따라 수정함.
         try {
-            List<PurposeTop7ResponseDTO> top7Purpose = statisticService.getTop7PurposeByMonth(year, month);
-            return ResponseEntity.ok(ApiResponse.onSuccess(top7Purpose));
+            PurposeTop7ResponseDTO responseDTO = statisticService.getTop7PurposeByMonth(year, month);
+            return ResponseEntity.ok(responseDTO);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
     //목적통계-연도별 탑7 나라 데이터 합산 조회
     @GetMapping("/purposeTop7ByYear")
-    public ResponseEntity<ApiResponse<List<PurposeTop7ResponseDTO>>> getPurposeTop7ByYear(
+    public ResponseEntity<ApiResponse<List<PurposeTop7DTO>>> getPurposeTop7ByYear(
             @RequestParam int year) {
         try {
-            List<PurposeTop7ResponseDTO> top7PurposeByYear = statisticService.getTop7PurposeByYear(year);
+            List<PurposeTop7DTO> top7PurposeByYear = statisticService.getTop7PurposeByYear(year);
             return ResponseEntity.ok(ApiResponse.onSuccess(top7PurposeByYear));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));

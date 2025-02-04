@@ -51,17 +51,15 @@ public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFact
     }
 
     @Override
-    public PurposeTop7ResponseDTO createPurposeTop7ResponseDTO(Purpose_Statistic statistic) {
-        PurposeTop7ResponseDTO dto = new PurposeTop7ResponseDTO();
-        dto.setYear(statistic.getYear());
-        dto.setMonth(statistic.getMonth());
+    public PurposeTop7DTO createPurposeTop7ResponseDTO(Purpose_Statistic statistic) {
+        PurposeTop7DTO dto = new PurposeTop7DTO();
         dto.setCountry(statistic.getCountry());
-        dto.setTotalPopulation(statistic.getTotal_population());
-        dto.setTravelPopulation(statistic.getTravel_population());
-        dto.setCommercialPopulation(statistic.getCommercial_population());
-        dto.setPublicPopulation(statistic.getPublic_population());
-        dto.setStudyPopulation(statistic.getStudy_population());
-        dto.setEtcPopulation(statistic.getEtc_population());
+        dto.setTotal_population(statistic.getTotal_population());
+        dto.setTravel_population(statistic.getTravel_population());
+        dto.setCommercial_population(statistic.getCommercial_population());
+        dto.setPublic_population(statistic.getPublic_population());
+        dto.setStudy_population(statistic.getStudy_population());
+        dto.setEtc_population(statistic.getEtc_population());
         return dto;
     }
 

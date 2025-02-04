@@ -3,7 +3,7 @@ package github.tourism.data.repository.statistic.custom;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import github.tourism.data.entity.statistic.Purpose_Statistic;
-import github.tourism.web.dto.statistic.PurposeTop7ResponseDTO;
+import github.tourism.web.dto.statistic.PurposeTop7DTO;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -30,11 +30,9 @@ public class PurposeRepositoryImpl implements PurposeRepositoryCustom{
     }
 
     @Override
-    public List<PurposeTop7ResponseDTO> findTop7ByYear(int year) {
+    public List<PurposeTop7DTO> findTop7ByYear(int year) {
         return queryFactory
-                .select(Projections.constructor(PurposeTop7ResponseDTO.class,
-                        purpose_Statistic.year,
-                        purpose_Statistic.country,
+                .select(Projections.constructor(PurposeTop7DTO.class,
                         purpose_Statistic.total_population.sum(),
                         purpose_Statistic.previous_total_population.sum(),
                         purpose_Statistic.travel_population.sum(),
