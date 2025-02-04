@@ -58,14 +58,18 @@ public class StatisticService {
     }
 
     //목적 통계에서 월별 총 방문객수 상위 7개 나라 데이터 조회
-    public List<PurposeTop7ResponseDTO> getTop7PurposeByMonth(int year, int month) {
+    public PurposeTop7ResponseDTO getTop7PurposeByMonth(int year, int month) {
         List<Purpose_Statistic> purposeStatistics = purpose_Repository.findTop7ByMonth(year, month);
-        return purposeStatistics.stream()
+
+        List<PurposeTop7DTO> top7List = purposeStatistics.stream()
                 .map(statisticResponseDTOFactory::createPurposeTop7ResponseDTO)
                 .collect(Collectors.toList());
+
+        return new PurposeTop7ResponseDTO(year,month,top7List);
     }
 
-    public List<PurposeTop7ResponseDTO> getTop7PurposeByYear(int year) {
+    //목적 통계에서 년별 총 방문객수 상위 7개 나라 데이터 조회
+    public List<PurposeTop7DTO> getTop7PurposeByYear(int year) {
         return purpose_Repository.findTop7ByYear(year);
     }
 

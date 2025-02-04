@@ -54,12 +54,10 @@ public class MapController {
     @GetMapping("/{mapId}")
     public ResponseEntity<MapDetailsDTO> getMapDetail(@PathVariable Integer mapId,
                                                       @AuthenticationPrincipal CustomUserDetails user) {
-
         Integer userId = null;
         if(user != null){
              userId = Integer.valueOf(user.getUserId());
         }
-
         MapDetailsDTO mapDetails = mapService.getMapDetail(mapId,userId);
         return ResponseEntity.ok(mapDetails);
     }
