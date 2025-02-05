@@ -2,8 +2,8 @@ package github.tourism.data.repository.statistic.custom;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import github.tourism.data.entity.statistic.Purpose_Statistic;
 import github.tourism.web.dto.statistic.PurposeTop7DTO;
+import github.tourism.web.dto.statistic.QPurposeTop7DTO;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -19,9 +19,12 @@ public class PurposeRepositoryImpl implements PurposeRepositoryCustom{
     }
 
     @Override
-    public List<Purpose_Statistic> findTop7ByMonth(int year, int month) {
+    public List<PurposeTop7DTO> findTop7ByMonth(int year, int month) {
         return queryFactory
-                .selectFrom(purpose_Statistic)
+                .select(new QPurposeTop7DTO(purpose_Statistic.country, purpose_Statistic.total_population,
+                        purpose_Statistic.travel_population, purpose_Statistic.commercial_population,
+                        purpose_Statistic.public_population, purpose_Statistic.study_population, purpose_Statistic.etc_population))
+                .from(purpose_Statistic)
                 .where(purpose_Statistic.year.eq(year)
                         .and(purpose_Statistic.month.eq(month)))
                 .orderBy(purpose_Statistic.total_population.desc())
@@ -33,8 +36,8 @@ public class PurposeRepositoryImpl implements PurposeRepositoryCustom{
     public List<PurposeTop7DTO> findTop7ByYear(int year) {
         return queryFactory
                 .select(Projections.constructor(PurposeTop7DTO.class,
+                        purpose_Statistic.country,
                         purpose_Statistic.total_population.sum(),
-                        purpose_Statistic.previous_total_population.sum(),
                         purpose_Statistic.travel_population.sum(),
                         purpose_Statistic.commercial_population.sum(),
                         purpose_Statistic.public_population.sum(),

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFactory {
+
     @Override
     public GenderResponseDTO createGenderResponseDTO(Gender_Statistic statistic) {
         GenderResponseDTO dto = new GenderResponseDTO();
@@ -25,6 +26,7 @@ public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFact
         dto.setFemaleRatio(statistic.getFemale_ratio());
         return dto;
     }
+
 
     @Override
     public PurposeResponseDTO createPurposeResponseDTO(Purpose_Statistic statistic) {
@@ -50,18 +52,6 @@ public class StatisticResponseDTOFactoryImpl implements StatisticResponseDTOFact
         return dto;
     }
 
-    @Override
-    public PurposeTop7DTO createPurposeTop7ResponseDTO(Purpose_Statistic statistic) {
-        PurposeTop7DTO dto = new PurposeTop7DTO();
-        dto.setCountry(statistic.getCountry());
-        dto.setTotal_population(statistic.getTotal_population());
-        dto.setTravel_population(statistic.getTravel_population());
-        dto.setCommercial_population(statistic.getCommercial_population());
-        dto.setPublic_population(statistic.getPublic_population());
-        dto.setStudy_population(statistic.getStudy_population());
-        dto.setEtc_population(statistic.getEtc_population());
-        return dto;
-    }
 
     @Override
     public RankPlaceResponseDTO createRankPlaceResponseDTO(RankPlace rankPlace) {

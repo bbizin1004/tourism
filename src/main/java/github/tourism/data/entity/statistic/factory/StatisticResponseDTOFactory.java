@@ -9,7 +9,6 @@ import github.tourism.web.dto.statistic.*;
 public interface StatisticResponseDTOFactory {
     GenderResponseDTO createGenderResponseDTO(Gender_Statistic statistic);
     PurposeResponseDTO createPurposeResponseDTO(Purpose_Statistic statistic);
-    PurposeTop7DTO createPurposeTop7ResponseDTO(Purpose_Statistic statistic);
     RankPlaceResponseDTO createRankPlaceResponseDTO(RankPlace rankPlace);
     VisitListResponseDTO createVisitListResponseDTO(VisitList visitList);
 }

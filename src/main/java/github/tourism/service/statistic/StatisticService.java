@@ -38,14 +38,13 @@ public class StatisticService {
     }
 
     //성별테이블에서 연도와 월에따라 상위7개 총인구 순위 조회
-    public List<GenderTop7ByYearAndMonthDTO> getGenderTop7ByMonth(int year, int month) {
-        List<Gender_Statistic> genderStatistics = gender_Repository.findTop7ByYearAndMonth(year, month);
-        return genderStatistics.stream()
-                .map(GenderTop7ByYearAndMonthDTO::new)
-                .collect(Collectors.toList());
+    public GenderTop7ResponseDTO getGenderTop7ByMonth(int year, int month) {
+        List<GenderTop7DTO> top7List = gender_Repository.findTop7ByYearAndMonth(year, month);
+
+        return new GenderTop7ResponseDTO(year,month,top7List);
     }
     //성별테이블에서 연도에 따라 각나라의 총 월 방문객수를 합산하여 총 방문객,총 성별 방문객을 조회
-    public List<GenderTop7ByYearAndMonthDTO> getGenderTop7ByYear(int year) {
+    public List<GenderTop7DTO> getGenderTop7ByYear(int year) {
         return gender_Repository.findTop7CountriesByYear(year);
     }
 
@@ -59,11 +58,8 @@ public class StatisticService {
 
     //목적 통계에서 월별 총 방문객수 상위 7개 나라 데이터 조회
     public PurposeTop7ResponseDTO getTop7PurposeByMonth(int year, int month) {
-        List<Purpose_Statistic> purposeStatistics = purpose_Repository.findTop7ByMonth(year, month);
 
-        List<PurposeTop7DTO> top7List = purposeStatistics.stream()
-                .map(statisticResponseDTOFactory::createPurposeTop7ResponseDTO)
-                .collect(Collectors.toList());
+        List<PurposeTop7DTO> top7List = purpose_Repository.findTop7ByMonth(year, month);
 
         return new PurposeTop7ResponseDTO(year,month,top7List);
     }
