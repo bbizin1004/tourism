@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PurposeRepositoryCustom {
 
-    List<Purpose_Statistic> findTop7ByMonth(int year, int month);
+    List<PurposeTop7DTO> findTop7ByMonth(int year, int month);
     List<PurposeTop7DTO> findTop7ByYear(int year);
 
 }

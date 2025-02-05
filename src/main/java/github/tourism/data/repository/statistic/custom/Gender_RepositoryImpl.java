@@ -3,7 +3,8 @@ package github.tourism.data.repository.statistic.custom;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import github.tourism.data.entity.statistic.Gender_Statistic;
-import github.tourism.web.dto.statistic.GenderTop7ByYearAndMonthDTO;
+import github.tourism.web.dto.statistic.GenderTop7DTO;
+import github.tourism.web.dto.statistic.QGenderTop7DTO;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -19,10 +20,11 @@ public class Gender_RepositoryImpl implements GenderRepositoryCustom {
     }
 
     @Override
-    public List<Gender_Statistic> findTop7ByYearAndMonth(int year,int month){
-
+    public List<GenderTop7DTO> findTop7ByYearAndMonth(int year,int month){
         return queryFactory
-                .selectFrom(gender_Statistic)
+                .select(new QGenderTop7DTO(gender_Statistic.country, gender_Statistic.total_population,
+                        gender_Statistic.male_population, gender_Statistic.female_population))
+                .from(gender_Statistic)
                 .where(gender_Statistic.year.eq(year)
                         .and(gender_Statistic.month.eq(month)))
                 .orderBy(gender_Statistic.total_population.desc())
@@ -31,9 +33,9 @@ public class Gender_RepositoryImpl implements GenderRepositoryCustom {
     };
 
     @Override
-    public List<GenderTop7ByYearAndMonthDTO> findTop7CountriesByYear(int year) {
+    public List<GenderTop7DTO> findTop7CountriesByYear(int year) {
         return queryFactory
-                .select(Projections.constructor(GenderTop7ByYearAndMonthDTO.class,
+                .select(Projections.constructor(GenderTop7DTO.class,
                                 gender_Statistic.year,
                                 gender_Statistic.country,
                                 gender_Statistic.total_population.sum(),

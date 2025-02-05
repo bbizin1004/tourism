@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/statistic")
+@RequestMapping("/api/statistic")
 @RequiredArgsConstructor
 public class StatisticController {
 
@@ -35,31 +35,22 @@ public class StatisticController {
     //프론트 요청에 의해 맵핑 주소를 이것만 씀.
     //성별통계-월별 방문인구 많은순으로 상위 7개 나라 조회
     @GetMapping("/gender")
-    public ResponseEntity<ApiResponse<List<GenderTop7ByYearAndMonthDTO>>> getGenderTop7ByMonth(
+    public ResponseEntity<GenderTop7ResponseDTO> getGenderTop7ByMonth(
             @RequestParam int year, @RequestParam int month) {
         try {
-            List<GenderTop7ByYearAndMonthDTO> genderStatistics = statisticService.getGenderTop7ByMonth(year, month);
-            return ResponseEntity.ok(ApiResponse.onSuccess(genderStatistics));
+            GenderTop7ResponseDTO responseDTO = statisticService.getGenderTop7ByMonth(year, month);
+            return ResponseEntity.ok(responseDTO);
         }   catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
-//        try {
-//            PurposeTop7ResponseDTO responseDTO = statisticService.getTop7PurposeByMonth(year, month);
-//            return ResponseEntity.ok(responseDTO);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-
-
     }
 
     //성별통계-연도별 나라의 총방문객수 상위7개 합산 데이터 조회
     @GetMapping("/genderTop7ByYear")
-    public ResponseEntity<ApiResponse<List<GenderTop7ByYearAndMonthDTO>>> getGenderTop7ByYear(
+    public ResponseEntity<ApiResponse<List<GenderTop7DTO>>> getGenderTop7ByYear(
             @RequestParam int year) {
         try {
-            List<GenderTop7ByYearAndMonthDTO> top7ByYear = statisticService.getGenderTop7ByYear(year);
+            List<GenderTop7DTO> top7ByYear = statisticService.getGenderTop7ByYear(year);
             return ResponseEntity.ok(ApiResponse.onSuccess(top7ByYear));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
