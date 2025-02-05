@@ -21,8 +21,8 @@ public class StatisticController {
 
     private final StatisticService statisticService;
 
-
-    @GetMapping("/gender")
+    //프론트 요청에 의해 맵핑 주소 변경함
+    @GetMapping("/genderByAll")
     public ResponseEntity<ApiResponse<List<GenderResponseDTO>>> showGenderStatistic() {
         try {
             List<GenderResponseDTO> genderStatistics = statisticService.getGenderStatistics();
@@ -32,8 +32,9 @@ public class StatisticController {
         }
     }
 
+    //프론트 요청에 의해 맵핑 주소를 이것만 씀.
     //성별통계-월별 방문인구 많은순으로 상위 7개 나라 조회
-    @GetMapping("/genderTop7Population")
+    @GetMapping("/gender")
     public ResponseEntity<ApiResponse<List<GenderTop7ByYearAndMonthDTO>>> getGenderTop7ByMonth(
             @RequestParam int year, @RequestParam int month) {
         try {
@@ -42,6 +43,15 @@ public class StatisticController {
         }   catch (Exception e) {
             return ResponseEntity.badRequest().body(ApiResponse.onFailure(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null));
         }
+
+//        try {
+//            PurposeTop7ResponseDTO responseDTO = statisticService.getTop7PurposeByMonth(year, month);
+//            return ResponseEntity.ok(responseDTO);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//        }
+
+
     }
 
     //성별통계-연도별 나라의 총방문객수 상위7개 합산 데이터 조회
@@ -58,8 +68,8 @@ public class StatisticController {
 
 
 
-
-    @GetMapping("/purpose")
+    //프론트 요청에 의해 맵핑주소를 변경
+    @GetMapping("/purposeByAll")
     public ResponseEntity<ApiResponse<List<PurposeResponseDTO>>> showPurposeStatistic() {
         try {
             List<PurposeResponseDTO> purposeStatistics = statisticService.getPurposeStatistics();
@@ -70,7 +80,7 @@ public class StatisticController {
     }
 
     //목적통계-월별 탑7 나라 조회
-    @GetMapping("/purposeTop7ByMonth")
+    @GetMapping("/purpose")
     public ResponseEntity<PurposeTop7ResponseDTO> getPurposeTop7ByMonth(
             @RequestParam int year, @RequestParam int month) {
 
