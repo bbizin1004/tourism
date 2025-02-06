@@ -74,13 +74,18 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-                "https://bookshoppingmall.vercel.app"// 프론트 배포 주소
+                "https://fe-silk-ten.vercel.app", // 프론트 배포 주소
+                "http://localhost:3000" // 개발 환경 추가
         ));
         configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(Collections.singletonList("access"));
-        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+//        configuration.setExposedHeaders(Collections.singletonList("access"));
+//        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
         configuration.addAllowedHeader("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
+
+        //  클라이언트에서 접근할 수 있도록 허용할 헤더 추가
+        configuration.setExposedHeaders(List.of("Authorization", "Set-Cookie"));
+
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
