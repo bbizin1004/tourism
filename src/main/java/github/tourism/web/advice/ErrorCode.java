@@ -22,7 +22,7 @@ public enum ErrorCode {
     ENTRY_POINT_FAILURE(401,"인증되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED),
     ACCESS_DENIED(403,"접근할 수 있는 권한이 없습니다.", HttpStatus.FORBIDDEN),
     EMAIL_NOT_EXIST(404,"해당 이메일의 사용자를 찾을 수 없습니다.",HttpStatus.NOT_FOUND),
-    EMAIL_ALREADY_EXIST(400,"이미 존재하는 이메일입니다.",HttpStatus.BAD_REQUEST),
+    EMAIL_ALREADY_EXIST(400,"다른 이메일을 사용해주시길 바랍니다.",HttpStatus.BAD_REQUEST),
     WEAK_PASSWORD(400,"비밀번호는 최소 8자 이상이어야 합니다.",HttpStatus.BAD_REQUEST),
     ROLE_FAILURE(400,"사용자 권한이 없습니다.",HttpStatus.BAD_REQUEST),
     UNAUTHORIZED_REFRESH(400,"Refresh Token이 없습니다.",HttpStatus.BAD_REQUEST),
