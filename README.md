@@ -242,7 +242,7 @@ create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가�
 이 부분 에러는 Authentication/username 이 잘못들어가있어서 오류가 뜬걸로 예상됨 <br>
 username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
 
-참고자료&블로그
+참고자료&블로그<br>
 
 1. AWS EC2에 MariaDB 설치하기
 https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/
