@@ -218,4 +218,24 @@ private Key 에 ppk 파일 넣어주면 됨 <br>
 → 하지만 연결 문제 해결되진 않았음
 
 해결시도3. 서버에서 접근 권한 부여
+```c
+sudo mysql -u root -p select user, host, plugin from user; #(플러그인체크)
 
+USE mysql;
+update user set plugin='mysql_native_password' where user='root';
+
+grant all privileges on *.* to '아이디'@'localhost';
+#특정 사용자에게 전 권한 부여
+grant all privileges on DB명.* to '아이디'@'localhost';
+#특정 사용자에게 특정 DB접근권한 부여
+FLUSH PRIVILEGES;
+(재시동)
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '재설정 비밀번호';
+
+select user, host, plugin from user; #호스트 재확인
+grant all privileges on *.* to '계정명'@'%'; #권한부여
+flush privileges; #재시작
+
+create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가능 호스트 생성
+```
