@@ -48,68 +48,84 @@ Backend
     ```
 
 
-### 2.3 \[F.E] URL 구조 ※ 예시로 작성된 URL입니다.
+### 2.3  URL 구조 
 
-- main
-
-|App|URL|Views Function|HTML File Name|Note|
-|---|---|---|---|---|
-|main|'/'|home|main/home.html|홈화면|
-|main|'/about/'|about|main/about.html|소개화면|
-
-- accounts
-
-|App|URL|Views Function|HTML File Name|Note|
-|---|---|---|---|---|
-|accounts|'register/'|register|accounts/register.html|회원가입|
-|accounts|'login/'|login|accounts/login.html|로그인|
-|accounts|'logout/'|logout|accounts/logout.html|로그아웃|
-|accounts|'profile/'|profile|accounts/profile.html|비밀번호변경기능 /  <br>프로필 수정/ 닉네임추가|
-
-- boardapp
-
-|App|URL|Views Function|HTML File Name|Note|
-|---|---|---|---|---|
-|board|'board/'|board|boardapp/post_list.html|게시판 목록|
-|board|'board/int:pk/'|post_detail|boardapp/post_detail.html|게시글 상세보기|
-|board|'board/write/'|post_write|boardapp/post_write.html|게시글 작성|
-|board|'board/edit/int:pk/'|post_edit|boardapp/post_edit.html|게시글 수정|
-|board|'board/delete/int:pk/'|post_delete|boardapp/post_delete.html|게시글 삭제|
-|board|'board/int:pk/comment/'|comment_create|boardapp/comment_form.html|댓글 작성|
-|board|'board/int:pk/comment/  <br>int:comment_pk/edit/'|comment_edit|boardapp/comment_form.html|댓글 수정|
-|board|'board/int:pk/comment/  <br>int:comment_pk/delete/'|comment_delete|boardapp/comment_  <br>confirm_delete.html|댓글 삭제|
-
-- blog
-
-|App|URL|Views Function|HTML File Name|Note|
-|---|---|---|---|---|
-|blog|'blog/'|blog|blog/blog.html|갤러리형 게시판 메인 화면|
-|blog|'blog/int:pk/'|post|blog/post.html|상세 포스트 화면|
-|blog|'blog/write/'|write|blog/write.html|카테고리 지정, 사진업로드,  <br>게시글 조회수 반영|
-|blog|'blog/edit/int:pk/'|edit|blog/edit.html|게시물목록보기|
-|blog|'blog/delete/int:pk/'|delete|blog/delete.html|삭제 화면|
-|blog|'blog/search/'|search|blog/search.html|주제와 카테고리에 따라 검색,  <br>시간순에 따라 정렬|
-|blog|'post/int:post_pk/comment/'|comment_new|blog/comment_form.html|댓글 입력 폼|
-|blog|'post/int:post_pk/comment/  <br>int:parent_pk/'|reply_new|blog/comment_form.html|대댓글 폼|
-|blog|'post/int:pk/like/'|like_post|blog/post.html|좋아요를 누르면 blog/post로 Redirect됨|
-|blog|'comment/int:pk/update/'|comment_update|blog/comment_form.html|댓글 업데이터 경로|
-|blog|'comment/int:pk/delete/'|comment_delete|blog/comment_  <br>confirm_delete.html|댓글 삭제 폼|
-
-### 2.4 \[B.E] URL 구조 --> 변경하여 작성
+- User
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|blog|GET|'/blog/posts/'|PostViewSet|게시글 목록||
-|blog|POST|'/blog/posts/'|PostViewSet|게시글 생성 / ChatGPT API 요청|✅|
-|blog|GET|'/blog/posts/{post_id}/'|PostViewSet|게시글 상세보기 / 게시글 조회수 증가||
-|blog|PATCH|'/blog/posts/{post_id}/'|PostViewSet|게시글 수정||
-|blog|DELETE|'/blog/posts/{post_id}/'|PostViewSet|게시글 삭제||
-|blog|POST|'/blog/posts/{post_id}/like/'|PostViewSet|게시글 좋아요 증가||
-|blog|GET|'/blog/posts/{post_id}/comments/'|CommentViewSet|게시물의 댓글 목록||
-|blog|POST|'/blog/posts/{post_id}/comments/'|CommentViewSet|게시물의 댓글 생성||
-|blog|GET|'/blog/posts/{post_id}/comments/{comment_id}/'|CommentViewSet|게시물의 특정 댓글 보기||
-|blog|PATCH|'/blog/posts/{post_id}/comments/{comment_id}/'|CommentViewSet|게시물의 특정 댓글 수정||
-|blog|DELETE|'/blog/posts/{post_id}/comments/{comment_id}/'|CommentViewSet|게시물의 특정 댓글 삭제||
+|seoulTourism|POST|'/auth/email'|Auth|이메일 중복확인||
+|seoulTourism|POST|'/auth/signup'|Auth|회원가입||
+|seoulTourism|POST|'/auth/login'|Auth|로그인||
+|seoulTourism|POST|'/reissue'|Auth|accessToken 재발급 및 refreshToken 갱신||
+|seoulTourism|POST|'/logout'|Auth|로그아웃||
+|seoulTourism|GET|'/auth/delete'|Auth|회원탈퇴||
+
+- Goods
+
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|GET|'/api/goods'|Goods|전체 목록 조회||
+|seoulTourism|GET|'/api/goods/category/{category}'|Goods|카테고리별 조회||
+|seoulTourism|GET|'/api/goods/{goodId}'|Goods|상세조회||
+|seoulTourism|GET|'/api/goods/available'|Goods|판매중인 굿즈 조회||
+
+- Cart
+
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|POST|'/cart/add'|Cart|장바구니 담기||
+|seoulTourism|GET|'/cart/check'|Cart|장바구니 전체조회||
+|seoulTourism|POST|'/cart/update'|Cart|장바구니 수량 조절||
+|seoulTourism|DElETE|'/cart/delete'|Cart|장바구니 목록 삭제(단건)||
+
+- Order
+
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|POST|'/order/create'|Order|주문 생성||
+
+- Calendar
+  
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|GET|'/calendar/schedule/{userId}?tourStartDate={tourDate}'|Calendar|유저와 투어시작일 기준으로 스케줄 조회||
+|seoulTourism|GET|'/calendar/schedule/all/{userId}'|Calendar|유저의 모든 스케줄 조회||
+|seoulTourism|DELETE|'/calendar/schedule/{calendarId}?userId={userId}'|Calendar|캘린더 삭제||
+|seoulTourism|POST|'/calendar/single'|Calendar|단일 캘린더 생성||
+|seoulTourism|GET|'/calendar/multipale'|Calendar|여러 캘린더 생성||
+|seoulTourism|GET|'/calendar/dates/{userId}'|Calendar|사용자에 따른 캘린더에 등록된 날짜만 조회||
+
+- Fav-place
+
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|POST|'/fav-places/{mapId}/like?userId={userId}'|Fav-place|찜 추가기능||
+|seoulTourism|GET|'/fav-places/{userId}'|Fav-place|추가한 찜 장소 내용 보여주기, 찜수 증가||
+|seoulTourism|DELETE|'/fav-places/{mapId}/unlike?userId=10'|Fav-place|찜 해체시, 찜수 감소기능 및 찜 삭제||
+
+- Payment
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|POST|'/payment/process'|Payment|결제처리||
+|seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회||
+|seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리||
+
+- Map
+
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|GET|'/api/maps'|Map|전체 맵 조회||
+|seoulTourism|GET|'/api/maps/{mapId}'|Map|맵 상세조회||
+|seoulTourism|POST|'/api/maps/1/new'|Map|찜 토글하기||
+|seoulTourism|GET|'/maps/category/{category}'|Map|카테고리별로 맵 조회||
+
+- Statistic
+  
+|App|Method|URL|Views Class|Note|Authentication|
+|---|---|---|---|---|---|
+|seoulTourism|GET|'/statistic/genderTop7Population?year={year}&month={month}'|Statistic|방문객(성별)중에서 월별 상위 7개 나라 조회||
+|seoulTourism|GET|'/statistic/genderTop7ByYear?year={year}'|Statistic|방문객(성별)중에서 연도별 상위 7개 나라 조회||
 
 
 
