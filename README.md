@@ -89,12 +89,12 @@ Backend
   
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|GET|'/calendar/schedule/{userId}?tourStartDate={tourDate}'|Calendar|유저와 투어시작일 기준으로 스케줄 조회||
-|seoulTourism|GET|'/calendar/schedule/all/{userId}'|Calendar|유저의 모든 스케줄 조회||
-|seoulTourism|DELETE|'/calendar/schedule/{calendarId}?userId={userId}'|Calendar|캘린더 삭제||
-|seoulTourism|POST|'/calendar/single'|Calendar|단일 캘린더 생성||
-|seoulTourism|GET|'/calendar/multipale'|Calendar|여러 캘린더 생성||
-|seoulTourism|GET|'/calendar/dates/{userId}'|Calendar|사용자에 따른 캘린더에 등록된 날짜만 조회||
+|seoulTourism|GET|'/calendar/schedule/{userId}?tourStartDate={tourDate}'|Calendar|유저와 투어시작일 기준으로 스케줄 조회|✅|
+|seoulTourism|GET|'/calendar/schedule/all/{userId}'|Calendar|유저의 모든 스케줄 조회|✅|
+|seoulTourism|DELETE|'/calendar/schedule/{calendarId}?userId={userId}'|Calendar|캘린더 삭제|✅|
+|seoulTourism|POST|'/calendar/single'|Calendar|단일 캘린더 생성|✅|
+|seoulTourism|GET|'/calendar/multipale'|Calendar|여러 캘린더 생성|✅|
+|seoulTourism|GET|'/calendar/dates/{userId}'|Calendar|사용자에 따른 캘린더에 등록된 날짜만 조회|✅|
 
 - Fav-place
 
