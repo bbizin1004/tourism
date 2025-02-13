@@ -28,7 +28,7 @@
 #### 🛠 기술 스택
 - Backend: Java 17, Spring Boot 3.x, Spring Security, JPA, QueryDSL    
 - Database: MariaDB 
-- CI/CD: Docker, AWS EC2 
+- Cloud/Deploy: Docker, AWS EC2 
 - Authentication: JWT (Spring Security 필터 방식)  
 - API: 지도 API, 공공 데이터 OpenAPI 활용  
 - Payment: PortOne
