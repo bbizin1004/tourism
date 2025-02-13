@@ -210,4 +210,4 @@ Backend
  → MariaDB 서버에 외부에서 접속을 시도할 때 발생하는 권한 문제
 
 해결시도1. AWS 인바운드 보안규칙 설정
-[![image]https://supercodingfi-tnr8356.slack.com/files/U086QEBRFEZ/F087X6PC474/_______________________________2025-01-09______________4.31.53.png
+[![image](https://supercodingfi-tnr8356.slack.com/files/U086QEBRFEZ/F087X6PC474/_______________________________2025-01-09______________4.31.53.png)](https://supercodingfi-tnr8356.slack.com/files/U086QEBRFEZ/F087X6PC474/_______________________________2025-01-09______________4.31.53.png)
