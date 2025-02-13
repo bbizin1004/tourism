@@ -254,4 +254,20 @@ https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98
   ### ec2 서버에 docker를 이용하여 배포했으나 서버가 실행이 안됨. <br> 
 *log 확인시 기존에는 인테리제이 환경변수 설정을 통해 주입했으나 ec2 서버에는 설정이 되어있지 않아 서버 실행이 안됨.*
 
+**해결시도 1 .env 파일 생성하여 환경변수 주입**
+ec2서버에서 .env 파일 생성  
+```c
+//예시
+DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+DATABASE_USERNAME=root
+DATABASE_PASSWORD=yourpassword
+DATABASE_URL=jdbc:mysql://your-database-endpoint:3306/tourism
+JWT_SECRET_KEY=your-secret-key
+ACCESS_KEY=your-aws-access-key
+SECRET_KEY=your-aws-secret-key
+IMP_KEY=your-imp-key
+IMP_SECRET_KEY=your-imp-secret
+```
+
+
 
