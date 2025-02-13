@@ -40,6 +40,7 @@
 
 - http://ec2-3-36-66-32.ap-northeast-2.compute.amazonaws.com:8080/
 - 테스트용 계정
+    ```
     id : bbb@abcdef.com
     pw : super1234!
     ```
