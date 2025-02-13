@@ -105,6 +105,7 @@ Backend
 |seoulTourism|DELETE|'/fav-places/{mapId}/unlike?userId=10'|Fav-place|찜 해체시, 찜수 감소기능 및 찜 삭제||
 
 - Payment
+
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
 |seoulTourism|POST|'/payment/process'|Payment|결제처리||
