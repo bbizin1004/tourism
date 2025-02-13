@@ -248,3 +248,10 @@ https://gom20.tistory.com/293
 
 **3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법**<br>
 https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98-%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%EB%B3%84-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
+
+
+### docker + ec2 서버 배포하기 
+  ### ec2 서버에 docker를 이용하여 배포했으나 서버가 실행이 안됨. <br> 
+**log 확인시 기존에는 인테리제이 환경변수 설정을 통해 주입했으나 ec2 서버에는 설정이 되어있지 않아 서버 실행이 안됨. **
+
+
