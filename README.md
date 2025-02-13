@@ -164,7 +164,7 @@
 ## 6. 데이터베이스 모델링(ERD) 및 변수명
 - 아래 ERD는 [ERDCloud](https://www.erdcloud.com/)를 사용했습니다.
 
-[![](src/main/resources/image/ERD.png)
+![](src/main/resources/image/ERD.png)
 
 ## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
