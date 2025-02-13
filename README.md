@@ -74,16 +74,16 @@ Backend
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|POST|'/cart/add'|Cart|장바구니 담기||
-|seoulTourism|GET|'/cart/check'|Cart|장바구니 전체조회||
-|seoulTourism|POST|'/cart/update'|Cart|장바구니 수량 조절||
-|seoulTourism|DElETE|'/cart/delete'|Cart|장바구니 목록 삭제(단건)||
+|seoulTourism|POST|'/cart/add'|Cart|장바구니 담기|✅|
+|seoulTourism|GET|'/cart/check'|Cart|장바구니 전체조회|✅|
+|seoulTourism|POST|'/cart/update'|Cart|장바구니 수량 조절|✅|
+|seoulTourism|DElETE|'/cart/delete'|Cart|장바구니 목록 삭제(단건)|✅|
 
 - Order
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|POST|'/order/create'|Order|주문 생성||
+|seoulTourism|POST|'/order/create'|Order|주문 생성|✅|
 
 - Calendar
   
@@ -108,9 +108,9 @@ Backend
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|POST|'/payment/process'|Payment|결제처리||
-|seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회||
-|seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리||
+|seoulTourism|POST|'/payment/process'|Payment|결제처리|✅|
+|seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회|✅|
+|seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리|✅|
 
 - Map
 
