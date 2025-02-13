@@ -199,8 +199,8 @@
 
 
 ## 9. 트러블 슈팅
-### ec 서버에 MariaDB 서버 설치
-  #### 디비버 접속 ec2 연결 오류
+### - ec 서버에 MariaDB 서버 설치
+  #### 1.디비버 접속 ec2 연결 오류
    **1) Access denied for user 'root'@'121.64.137.133' (using password: YES)<br> → MariaDB 서버에 외부에서 접속을 시도할 때 발생하는 권한 문제**
 
 **해결시도1. AWS 인바운드 보안규칙 설정**
@@ -250,7 +250,7 @@ https://gom20.tistory.com/293
 https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98-%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%EB%B3%84-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
 
 
-### docker + ec2 서버 배포하기 
+### - docker + ec2 서버 배포하기 
   ### ec2 서버에 docker를 이용하여 배포했으나 서버가 실행이 안됨. <br> 
 **log 확인시 기존에는 인테리제이 환경변수 설정을 통해 주입했으나 ec2 서버에는 설정이 되어있지 않아 서버 실행이 안됨. **
 
