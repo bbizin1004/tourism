@@ -173,7 +173,8 @@
 
 - 아래 Architecture 설계도는 PPT를 사용했습니다.
 
-[![image](https://github.com/weniv/project_sample_repo/raw/main/architecture.png)](https://github.com/weniv/project_sample_repo/blob/main/architecture.png)
+[![image]![architecture-seoulTourism](https://github.com/user-attachments/assets/a3bf7940-0289-4619-af17-4e41497b2cb5)
+
 
 - PPT로 간단하게 작성하였으나, 아키텍쳐가 커지거나, 상세한 내용이 필요할 경우 [AWS architecture Tool](https://online.visual-paradigm.com/ko/diagrams/features/aws-architecture-diagram-tool/)을 사용하기도 합니다.
 
