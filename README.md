@@ -255,7 +255,7 @@ https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98
 *log 확인시 기존에는 인테리제이 환경변수 설정을 통해 주입했으나 ec2 서버에는 설정이 되어있지 않아 서버 실행이 안됨.*
 
 **해결시도 1 .env 파일 생성하여 환경변수 주입**
-ec2서버에서 .env 파일 생성  
+1)ec2서버에서 .env 파일 생성  
 ```c
 //예시
 DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
@@ -268,6 +268,23 @@ SECRET_KEY=your-aws-secret-key
 IMP_KEY=your-imp-key
 IMP_SECRET_KEY=your-imp-secret
 ```
+
+2)ec2 서버에서 docker-compose.yml 작성하여 .env 파일 읽어오기.
+```c
+version: '3.8'
+
+services:
+  tourism-app:
+    image: tourism-app
+    container_name: tourism-container
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+```
+
+
 
 
 
