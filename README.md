@@ -269,7 +269,7 @@ IMP_KEY=your-imp-key
 IMP_SECRET_KEY=your-imp-secret
 ```
 
-2)ec2 서버에서 docker-compose.yml 작성하여 .env 파일 읽어오기.
+2)ec2 서버에서 docker-compose.yml 작성
 ```c
 version: '3.8'
 
@@ -284,7 +284,10 @@ services:
       - .env
 ```
 
-
+3)ec서버에서 docker-compose.yml을 이용하여 재빌드
+```c
+docker-compose up -d
+```
 
 
 
