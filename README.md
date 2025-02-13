@@ -35,9 +35,9 @@
 
 
 ### 2.2 배포 URL
-Frontend
-- https://seoultourismweb.vercel.app **--> 임시로 작성하여 추후 수정하겠습니다.**
-Backend
+#### Frontend
+- https://seoultourismweb.vercel.app **--> 임시로 작성하여 추후 수정하겠습니다.**<br>
+#### Backend
 - http://ec2-3-36-66-32.ap-northeast-2.compute.amazonaws.com:8080/
 - 테스트용 계정
     ```
@@ -47,7 +47,7 @@ Backend
 
 ### 2.3  URL 구조 --> 나중에 프론트 배포가 끝나면 프론트 URL추가 작성
 
-- User
+- **User**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -58,7 +58,7 @@ Backend
 |seoulTourism|POST|'/logout'|Auth|로그아웃||
 |seoulTourism|GET|'/auth/delete'|Auth|회원탈퇴||
 
-- Goods
+- **Goods**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -67,7 +67,7 @@ Backend
 |seoulTourism|GET|'/api/goods/{goodId}'|Goods|상세조회||
 |seoulTourism|GET|'/api/goods/available'|Goods|판매중인 굿즈 조회||
 
-- Cart
+- **Cart**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -76,13 +76,13 @@ Backend
 |seoulTourism|POST|'/cart/update'|Cart|장바구니 수량 조절|✅|
 |seoulTourism|DElETE|'/cart/delete'|Cart|장바구니 목록 삭제(단건)|✅|
 
-- Order
+- **Order**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
 |seoulTourism|POST|'/order/create'|Order|주문 생성|✅|
 
-- Calendar
+- **Calendar**
   
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -93,7 +93,7 @@ Backend
 |seoulTourism|GET|'/calendar/multipale'|Calendar|여러 캘린더 생성|✅|
 |seoulTourism|GET|'/calendar/dates/{userId}'|Calendar|사용자에 따른 캘린더에 등록된 날짜만 조회|✅|
 
-- Fav-place
+- **Fav-place**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -101,7 +101,7 @@ Backend
 |seoulTourism|GET|'/fav-places/{userId}'|Fav-place|추가한 찜 장소 내용 보여주기, 찜수 증가||
 |seoulTourism|DELETE|'/fav-places/{mapId}/unlike?userId=10'|Fav-place|찜 해체시, 찜수 감소기능 및 찜 삭제||
 
-- Payment
+- **Payment**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -109,7 +109,7 @@ Backend
 |seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회|✅|
 |seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리|✅|
 
-- Map
+- **Map**
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -118,7 +118,7 @@ Backend
 |seoulTourism|POST|'/api/maps/1/new'|Map|찜 토글하기||
 |seoulTourism|GET|'/maps/category/{category}'|Map|카테고리별로 맵 조회||
 
-- Statistic
+- **Statistic**
   
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
@@ -240,11 +240,11 @@ create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가�
 username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
 
 #### 참고자료&블로그
-1.AWS EC2에 MariaDB 설치하기<br>
+**1.AWS EC2에 MariaDB 설치하기**<br>
 https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/ --> 해당 주소 접근이 안됨
 
-2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션<br>
+**2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션**<br>
 https://gom20.tistory.com/293
 
-3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법<br>
+**3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법**<br>
 https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98-%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%EB%B3%84-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
