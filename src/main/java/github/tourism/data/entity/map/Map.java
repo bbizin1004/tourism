@@ -52,7 +52,4 @@ public class Map {
         }
     }
 
-//    Optimistic Lock
-    @Version
-    private Long version;
 }

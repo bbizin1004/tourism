@@ -74,7 +74,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-                "https://fe-silk-ten.vercel.app", // 프론트 배포 주소
+                "https://fe-silk-ten.vercel.app",
+                "https://seoultourismweb.vercel.app", // 프론트 배포 주소
                 "http://localhost:3000" // 개발 환경 추가
         ));
         configuration.setAllowCredentials(true);
