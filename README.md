@@ -36,15 +36,12 @@
 - Payment: PortOne
 
 
-### 2.2 배포 URL --> 변경하여 작성
+### 2.2 배포 URL
 
-- 배포할 URL 여기에 작성해주시면 됩니다.
+- http://ec2-3-36-66-32.ap-northeast-2.compute.amazonaws.com:8080/
 - 테스트용 계정
-  ※ 판매자,구매자 둘다 작성해야합니다.
-- 단, 중고 거래인 경우 하나만 작성해도 괜찮습니다.
-    ```
-    id : test@test.test
-    pw : test11!!
+    id : bbb@abcdef.com
+    pw : super1234!
     ```
 
 
