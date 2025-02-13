@@ -213,3 +213,6 @@ Backend
 
 해결시도2. SSH로 연결시도
 ![image](src/main/resources/image/트러블슈팅2.png)
+
+private Key 에 ppk 파일 넣어주면 됨 <br>
+→ 하지만 연결 문제 해결되진 않았음
