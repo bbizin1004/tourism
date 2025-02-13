@@ -26,7 +26,7 @@
 ### 2.1 개발 환경 
 
 #### 🛠 기술 스택
-- Backend: Java 17, Spring Boot 3.x, Spring Security, JPA  
+- Backend: Java 17, Spring Boot 3.x, Spring Security, JPA, QueryDSL    
 - Database: MariaDB 
 - CI/CD: Docker, AWS EC2 
 - Authentication: JWT (Spring Security 필터 방식)  
