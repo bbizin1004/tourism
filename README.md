@@ -35,8 +35,8 @@
 
 
 ### 2.2 배포 URL
-
-
+Frontend
+- https://seoultourismweb.vercel.app **--> 임시로 작성하여 추후 수정하겠습니다.**
 Backend
 - http://ec2-3-36-66-32.ap-northeast-2.compute.amazonaws.com:8080/
 - 테스트용 계정
@@ -44,7 +44,6 @@ Backend
     id : bbb@abcdef.com
     pw : super1234!
     ```
-
 
 ### 2.3  URL 구조 --> 나중에 프론트 배포가 끝나면 프론트 URL추가 작성
 
@@ -127,7 +126,6 @@ Backend
 |seoulTourism|GET|'/statistic/genderTop7ByYear?year={year}'|Statistic|방문객(성별)중에서 연도별 상위 7개 나라 조회||
 
 
-
 ## 3. 요구사항 명세와 기능 명세
 ### 3 - 1. 데이터 기반 통계
 
@@ -137,7 +135,23 @@ Backend
 
 사용자가 사이트를 사용하여 여행 계획을 수립할 때 저장한 여행지를 수집하여, 통계적으로 유의미한 인사이트를 도출합니다.  이를 통해 해당 사이트를 사용하는 사용자의 선호도를 확인하고 차트를 활용하여 통계 결과를 직관적으로 이해할 수 있도록 합니다.
 
-## 4. 개발 일정(WBS) -->일정 작성(머메이드, 간트 차트, 엑셀 중 하나를 이용하여 시각화 자료)
+## 4. 메인 기능
+### 4-1. 공공데이터 Open API를 이용한 통계 분석 및 시각화-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 한국 관광 데이터랩에서 제공한 데이터를 가공하고 통계를 차트로 시각화
+- selenium과 airflow 또는 spring batch를 이용한 정기적인 업데이트
+- 캘린더에 저장된 여행지를 수집하여 사용자의 여행지 선호도 순위를 시각화
+
+### 4-2. 캘린더를 통한 일정 관리-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 여행지를 찜(장바구니 개념)한다
+- 찜한 여행지를 이용해 날짜와시간을 설정하여 타임 테이블을 생성
+- 생성된 타임 테이블을 캘린더에서 확인 가능
+
+### 4-3. 문화재 및 전통 기법을 이용한 굿즈 소개 및 판매-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 해당 굿즈에 대한 내용 및 수량을 확인
+- 장바구니에 해당 품목을 저장
+- 아임포트를 사용하여 결제 구현
+
+## 5. 개발 일정(WBS) -->일정 작성(머메이드, 간트 차트, 엑셀 중 하나를 이용하여 시각화 자료), 화면을 캡쳐해서 사용하는 경우 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
 **데일리 스크럼 시간 : 매일 오후 2시**
 
@@ -147,7 +161,7 @@ Backend
 - 아래 일정표는 [habitmaker.co.kr](https://habitmaker.co.kr/) 에서 작성되었습니다.
 - 관련된 스택 표시는 [dev.habitmaker.co.kr](https://dev.habitmaker.co.kr/) 에서 작성되었습니다.
 
-## 5. 데이터베이스 모델링(ERD) 및 변수명 --> 추가/수정된 테이블 확인 및 프론트와 주고 받는 변수명(해당 변수명이 어떤 내용을 전달하는지) 작성
+## 6. 데이터베이스 모델링(ERD) 및 변수명 --> 추가/수정된 테이블 확인 및 프론트와 주고 받는 변수명(해당 변수명이 어떤 내용을 전달하는지) 작성, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
 - 아래 ERD는 [ERDCloud](https://www.erdcloud.com/)를 사용했습니다.
 
@@ -155,23 +169,7 @@ Backend
 
 - [https://dbdiagram.io/home도](https://dbdiagram.io/home%EB%8F%84) 많이 사용합니다.
 
-## 6. 메인 기능
-### 6-1. 공공데이터 Open API를 이용한 통계 분석 및 시각화-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
-- 한국 관광 데이터랩에서 제공한 데이터를 가공하고 통계를 차트로 시각화
-- selenium과 airflow 또는 spring batch를 이용한 정기적인 업데이트
-- 캘린더에 저장된 여행지를 수집하여 사용자의 여행지 선호도 순위를 시각화
-
-### 6-2. 캘린더를 통한 일정 관리-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
-- 여행지를 찜(장바구니 개념)한다
-- 찜한 여행지를 이용해 날짜와시간을 설정하여 타임 테이블을 생성
-- 생성된 타임 테이블을 캘린더에서 확인 가능
-
-### 6-3. 문화재 및 전통 기법을 이용한 굿즈 소개 및 판매-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
-- 해당 굿즈에 대한 내용 및 수량을 확인
-- 장바구니에 해당 품목을 저장
-- 아임포트를 사용하여 결제 구현
-
-## 7. Architecture
+## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
 - 아래 Architecture 설계도는 PPT를 사용했습니다.
 
@@ -179,13 +177,13 @@ Backend
 
 - PPT로 간단하게 작성하였으나, 아키텍쳐가 커지거나, 상세한 내용이 필요할 경우 [AWS architecture Tool](https://online.visual-paradigm.com/ko/diagrams/features/aws-architecture-diagram-tool/)을 사용하기도 합니다.
 
-## 8. 와이어프레임 / UI / BM --> 변경하여 작성
+## 8. 와이어프레임 / UI / BM --> 프론트에서 작업이 완료되는대로 추가/수정, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 ### 8.1 와이어프레임
 - 아래 페이지별 상세 설명, 더 큰 이미지로 하나하나씩 설명 필요
 
 [![](https://github.com/weniv/project_sample_repo/raw/main/ui.png)](https://github.com/weniv/project_sample_repo/blob/main/ui.png)
 
-### 8.2 화면 설계 ※ 화면은 gif,jpg 파일로 업로드해주세요.
+### 8.2 화면 설계 --> 프론트에서 작업이 완료되는대로 추가/수정, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 |   |   |
 |---|---|
 |메인|로그인|
@@ -243,7 +241,7 @@ username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
 
 #### 참고자료&블로그
 1.AWS EC2에 MariaDB 설치하기<br>
-https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/
+https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/ --> 해당 주소 접근이 안됨
 
 2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션<br>
 https://gom20.tistory.com/293
