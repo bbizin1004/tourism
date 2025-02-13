@@ -100,33 +100,33 @@ Backend
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|POST|'/fav-places/{mapId}/like?userId={userId}'|Fav-place|찜 추가기능||
-|seoulTourism|GET|'/fav-places/{userId}'|Fav-place|추가한 찜 장소 내용 보여주기, 찜수 증가||
-|seoulTourism|DELETE|'/fav-places/{mapId}/unlike?userId=10'|Fav-place|찜 해체시, 찜수 감소기능 및 찜 삭제||
+|seoulTourism|POST|'/fav-places/{mapId}/like?userId={userId}'|Fav-place|찜 추가기능||
+|seoulTourism|GET|'/fav-places/{userId}'|Fav-place|추가한 찜 장소 내용 보여주기, 찜수 증가||
+|seoulTourism|DELETE|'/fav-places/{mapId}/unlike?userId=10'|Fav-place|찜 해체시, 찜수 감소기능 및 찜 삭제||
 
 - Payment
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|POST|'/payment/process'|Payment|결제처리||
-|seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회||
-|seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리||
+|seoulTourism|POST|'/payment/process'|Payment|결제처리||
+|seoulTourism|GET|'/payment/history'|Payment|결제 내역 조회||
+|seoulTourism|POST|'/payment/cancel/{impUid}'|Payment|결제처리||
 
 - Map
 
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|GET|'/api/maps'|Map|전체 맵 조회||
-|seoulTourism|GET|'/api/maps/{mapId}'|Map|맵 상세조회||
-|seoulTourism|POST|'/api/maps/1/new'|Map|찜 토글하기||
-|seoulTourism|GET|'/maps/category/{category}'|Map|카테고리별로 맵 조회||
+|seoulTourism|GET|'/api/maps'|Map|전체 맵 조회||
+|seoulTourism|GET|'/api/maps/{mapId}'|Map|맵 상세조회||
+|seoulTourism|POST|'/api/maps/1/new'|Map|찜 토글하기||
+|seoulTourism|GET|'/maps/category/{category}'|Map|카테고리별로 맵 조회||
 
 - Statistic
   
 |App|Method|URL|Views Class|Note|Authentication|
 |---|---|---|---|---|---|
-|seoulTourism|GET|'/statistic/genderTop7Population?year={year}&month={month}'|Statistic|방문객(성별)중에서 월별 상위 7개 나라 조회||
-|seoulTourism|GET|'/statistic/genderTop7ByYear?year={year}'|Statistic|방문객(성별)중에서 연도별 상위 7개 나라 조회||
+|seoulTourism|GET|'/statistic/genderTop7Population?year={year}&month={month}'|Statistic|방문객(성별)중에서 월별 상위 7개 나라 조회||
+|seoulTourism|GET|'/statistic/genderTop7ByYear?year={year}'|Statistic|방문객(성별)중에서 연도별 상위 7개 나라 조회||
 
 
 
