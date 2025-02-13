@@ -237,3 +237,7 @@ flush privileges; #재시작
 
 create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가능 호스트 생성
 ```
+2) dbeaver connection timeout<br>
+→ 주로 네트워크 연결, 방화벽 설정, 또는 서버 설정 문제가 원인 <br>
+이 부분 에러는 Authentication/username 이 잘못들어가있어서 오류가 뜬걸로 예상됨 <br>
+username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
