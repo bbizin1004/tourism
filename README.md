@@ -210,3 +210,6 @@ Backend
 
 해결시도1. AWS 인바운드 보안규칙 설정
 ![image](src/main/resources/image/트러블슈팅1.png)
+
+해결시도2. SSH로 연결시도
+![image](src/main/resources/image/트러블슈팅2.png)
