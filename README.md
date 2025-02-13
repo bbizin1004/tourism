@@ -161,13 +161,10 @@
 - 아래 일정표는 [habitmaker.co.kr](https://habitmaker.co.kr/) 에서 작성되었습니다.
 - 관련된 스택 표시는 [dev.habitmaker.co.kr](https://dev.habitmaker.co.kr/) 에서 작성되었습니다.
 
-## 6. 데이터베이스 모델링(ERD) 및 변수명 --> 추가/수정된 테이블 확인 및 프론트와 주고 받는 변수명(해당 변수명이 어떤 내용을 전달하는지) 작성, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
-
+## 6. 데이터베이스 모델링(ERD) 및 변수명
 - 아래 ERD는 [ERDCloud](https://www.erdcloud.com/)를 사용했습니다.
 
 [![](https://github.com/weniv/project_sample_repo/raw/main/erd.png)](https://github.com/weniv/project_sample_repo/blob/main/erd.png)
-
-- [https://dbdiagram.io/home도](https://dbdiagram.io/home%EB%8F%84) 많이 사용합니다.
 
 ## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
