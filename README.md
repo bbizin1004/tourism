@@ -171,7 +171,8 @@
 
 ## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
-[![][architecture-seoulTourism](https://github.com/user-attachments/assets/a3bf7940-0289-4619-af17-4e41497b2cb5)
+![architecture-seoulTourism](https://github.com/user-attachments/assets/4d0e1d58-f510-41d3-af85-599cdca60648)
+
 
 
 ## 8. 와이어프레임 / UI / BM --> 프론트에서 작업이 완료되는대로 추가/수정, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
