@@ -241,3 +241,14 @@ create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가�
 → 주로 네트워크 연결, 방화벽 설정, 또는 서버 설정 문제가 원인 <br>
 이 부분 에러는 Authentication/username 이 잘못들어가있어서 오류가 뜬걸로 예상됨 <br>
 username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
+
+참고자료&블로그
+
+1. AWS EC2에 MariaDB 설치하기
+https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/
+
+2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션
+https://gom20.tistory.com/293
+
+3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법
+https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98-%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%EB%B3%84-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
