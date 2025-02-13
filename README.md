@@ -171,12 +171,8 @@
 
 ## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 
-- 아래 Architecture 설계도는 PPT를 사용했습니다.
-
 [![image]![architecture-seoulTourism](https://github.com/user-attachments/assets/a3bf7940-0289-4619-af17-4e41497b2cb5)
 
-
-- PPT로 간단하게 작성하였으나, 아키텍쳐가 커지거나, 상세한 내용이 필요할 경우 [AWS architecture Tool](https://online.visual-paradigm.com/ko/diagrams/features/aws-architecture-diagram-tool/)을 사용하기도 합니다.
 
 ## 8. 와이어프레임 / UI / BM --> 프론트에서 작업이 완료되는대로 추가/수정, 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
 ### 8.1 와이어프레임
