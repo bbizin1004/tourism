@@ -46,7 +46,7 @@ Backend
     ```
 
 
-### 2.3  URL 구조 
+### 2.3  URL 구조 --> 나중에 프론트 배포가 끝나면 프론트 URL추가 작성
 
 - User
 
@@ -133,16 +133,13 @@ Backend
 
 방문객 수, 여행지 선호도, 관심 지역 등 실제 데이터를 기반으로 한 통계 분석이 필요합니다.  이를 통해 정확한 데이터를 기반으로 해당 사이트를 사용하는 사용자에게 신뢰와 계획에 도움이 되는 선택지를 제공할 수 있도록 합니다.
 
-### 3 - 2. 사용자 행동 분석
+### 3 - 2. 사용자 선호도 조사
 
-사용자가 사이트내 캘린더를 사용하여 여행 계획을 수립할 때 캘린더에 저장한 여행지를 수집하여, 통계적으로 유의미한 인사이트를 도출합니다.  이를 통해 해당 사이트를 사용하는 사용자의 선호도를 확인하고 차트를 활용하여 통계 결과를 직관적으로 이해할 수 있도록 합니다.
+사용자가 사이트를 사용하여 여행 계획을 수립할 때 저장한 여행지를 수집하여, 통계적으로 유의미한 인사이트를 도출합니다.  이를 통해 해당 사이트를 사용하는 사용자의 선호도를 확인하고 차트를 활용하여 통계 결과를 직관적으로 이해할 수 있도록 합니다.
 
-## 4. 개발 일정 --> 변경하여 작성
+## 4. 개발 일정(WBS) -->일정 작성(머메이드, 간트 차트, 엑셀 중 하나를 이용하여 시각화 자료)
 
-## 데일리 스크럼 시간 : 매일 오후 2시
-
-### 4.1 개발 일정(WBS) --> 변경하여 작성
-
+**데일리 스크럼 시간 : 매일 오후 2시**
 
 [![](https://github.com/weniv/project_sample_repo/raw/main/wbs_xlsx.png)](https://github.com/weniv/project_sample_repo/blob/main/wbs_xlsx.png)
 
@@ -150,19 +147,45 @@ Backend
 - 아래 일정표는 [habitmaker.co.kr](https://habitmaker.co.kr/) 에서 작성되었습니다.
 - 관련된 스택 표시는 [dev.habitmaker.co.kr](https://dev.habitmaker.co.kr/) 에서 작성되었습니다.
 
+## 5. 데이터베이스 모델링(ERD) 및 변수명 --> 추가/수정된 테이블 확인 및 프론트와 주고 받는 변수명(해당 변수명이 어떤 내용을 전달하는지) 작성
 
-## 5. 와이어프레임 / UI / BM --> 변경하여 작성
-### 5.1 와이어프레임
+- 아래 ERD는 [ERDCloud](https://www.erdcloud.com/)를 사용했습니다.
+
+[![](https://github.com/weniv/project_sample_repo/raw/main/erd.png)](https://github.com/weniv/project_sample_repo/blob/main/erd.png)
+
+- [https://dbdiagram.io/home도](https://dbdiagram.io/home%EB%8F%84) 많이 사용합니다.
+
+## 6. 메인 기능
+### 6-1. 공공데이터 Open API를 이용한 통계 분석 및 시각화-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 한국 관광 데이터랩에서 제공한 데이터를 가공하고 통계를 차트로 시각화
+- selenium과 airflow 또는 spring batch를 이용한 정기적인 업데이트
+- 캘린더에 저장된 여행지를 수집하여 사용자의 여행지 선호도 순위를 시각화
+
+### 6-2. 캘린더를 통한 일정 관리-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 여행지를 찜(장바구니 개념)한다
+- 찜한 여행지를 이용해 날짜와시간을 설정하여 타임 테이블을 생성
+- 생성된 타임 테이블을 캘린더에서 확인 가능
+
+### 6-3. 문화재 및 전통 기법을 이용한 굿즈 소개 및 판매-->밑에 작성된 내용에 빠진 내용및 사용된 방식 추가/수정 부탁드립니다.
+- 해당 굿즈에 대한 내용 및 수량을 확인
+- 장바구니에 해당 품목을 저장
+- 아임포트를 사용하여 결제 구현
+
+## 7. Architecture
+
+- 아래 Architecture 설계도는 PPT를 사용했습니다.
+
+[![image](https://github.com/weniv/project_sample_repo/raw/main/architecture.png)](https://github.com/weniv/project_sample_repo/blob/main/architecture.png)
+
+- PPT로 간단하게 작성하였으나, 아키텍쳐가 커지거나, 상세한 내용이 필요할 경우 [AWS architecture Tool](https://online.visual-paradigm.com/ko/diagrams/features/aws-architecture-diagram-tool/)을 사용하기도 합니다.
+
+## 8. 와이어프레임 / UI / BM --> 변경하여 작성
+### 8.1 와이어프레임
 - 아래 페이지별 상세 설명, 더 큰 이미지로 하나하나씩 설명 필요
 
 [![](https://github.com/weniv/project_sample_repo/raw/main/ui.png)](https://github.com/weniv/project_sample_repo/blob/main/ui.png)
 
-- 와이어 프레임은 디자인을 할 수 있다면 '피그마'를, 디자인을 할 수 없다면 '카카오 오븐'으로 쉽게 만들 수 있습니다.
-
-### 5.2 화면 설계 ※ 화면은 gif,jpg 파일로 업로드해주세요.
-
-- 표는 가로/세로 상관이 없습니다.
-
+### 8.2 화면 설계 ※ 화면은 gif,jpg 파일로 업로드해주세요.
 |   |   |
 |---|---|
 |메인|로그인|
@@ -176,47 +199,23 @@ Backend
 |글 상세보기|댓글|
 |[![](https://github.com/weniv/project_sample_repo/raw/main/ui3.png)](https://github.com/weniv/project_sample_repo/blob/main/ui3.png)|[![](https://github.com/weniv/project_sample_repo/raw/main/ui3.png)](https://github.com/weniv/project_sample_repo/blob/main/ui3.png)|
 
-## 6. 데이터베이스 모델링(ERD) 및 변수명 --> 변경하여 작성
-
-- 프론트와 백엔드 간에 정보를 주고 받는 과정에서 혼선이 일어나지 않도록 변수명을 설정이 필요합니다.
-- 프론트에서 submit과정을 진행할 때 어떤 변수명으로 보내는지 알아야 데이터 맞추기가 수월합니다.
-
-- 아래 ERD는 [ERDCloud](https://www.erdcloud.com/)를 사용했습니다.
-
-[![](https://github.com/weniv/project_sample_repo/raw/main/erd.png)](https://github.com/weniv/project_sample_repo/blob/main/erd.png)
-
-- [https://dbdiagram.io/home도](https://dbdiagram.io/home%EB%8F%84) 많이 사용합니다.
-
-## 7. Architecture --> 변경하여 작성
-
-- 아래 Architecture 설계도는 PPT를 사용했습니다.
-
-[![image](https://github.com/weniv/project_sample_repo/raw/main/architecture.png)](https://github.com/weniv/project_sample_repo/blob/main/architecture.png)
-
-- PPT로 간단하게 작성하였으나, 아키텍쳐가 커지거나, 상세한 내용이 필요할 경우 [AWS architecture Tool](https://online.visual-paradigm.com/ko/diagrams/features/aws-architecture-diagram-tool/)을 사용하기도 합니다.
-
-## 8. 메인 기능 --> 변경하여 작성
-- 머메이드나 이미지 파일을 사용하면 좋을 것 같습니다.
-- 요구사항 및 기능 명세에서 제외한 기능을 작성하면 좋을 것 같습니다.
-- 예를 들어, 이미지 저장을 위해 Amazon S3를 사용했다. OAuth 기능 구현을 위해 카카오로그인 API를 사용했다. 등등
-- 요구사항 및 기능 명세에서 간단하게 설명만 하였다면 구현한 API를 자세하게 설명해도 괜찮습니다.
 
 ## 9. 트러블 슈팅
 ### ec 서버에 MariaDB 서버 설치
-  *디비버 접속 ec2 연결 오류*
-   1) Access denied for user 'root'@'121.64.137.133' (using password: YES)<br> → MariaDB 서버에 외부에서 접속을 시도할 때 발생하는 권한 문제
+  #### 디비버 접속 ec2 연결 오류
+   **1) Access denied for user 'root'@'121.64.137.133' (using password: YES)<br> → MariaDB 서버에 외부에서 접속을 시도할 때 발생하는 권한 문제**
 
-해결시도1. AWS 인바운드 보안규칙 설정
+**해결시도1. AWS 인바운드 보안규칙 설정**
 ![image](src/main/resources/image/트러블슈팅1.png)
 
-해결시도2. SSH로 연결시도
+**해결시도2. SSH로 연결시도**
 ![image](src/main/resources/image/트러블슈팅2.png)
 
 private Key 에 ppk 파일 넣어주면 됨 <br>
 → 하지만 연결 문제 해결되진 않았음
 
-해결시도3. 서버에서 접근 권한 부여
-```c
+**해결시도3. 서버에서 접근 권한 부여**
+```cmd
 sudo mysql -u root -p select user, host, plugin from user; #(플러그인체크)
 
 USE mysql;
@@ -237,18 +236,17 @@ flush privileges; #재시작
 
 create user '계정명'@'%' identified by 'password'; #'%' 모든 IP 접근 가능 호스트 생성
 ```
-2) dbeaver connection timeout<br>
+**2) dbeaver connection timeout**<br>
 → 주로 네트워크 연결, 방화벽 설정, 또는 서버 설정 문제가 원인 <br>
 이 부분 에러는 Authentication/username 이 잘못들어가있어서 오류가 뜬걸로 예상됨 <br>
 username을 root에서 ec2-user 로 변경해주니 서버 연결됨!
 
-참고자료&블로그<br>
-
-1.AWS EC2에 MariaDB 설치하기
+#### 참고자료&블로그
+1.AWS EC2에 MariaDB 설치하기<br>
 https://saml-planner.com/2024/02/19/aws-ec2%EC%97%90-mariadb-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0/
 
-2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션
+2.[AWS] EC2 Linux2에 MariaDB 설치 및 데이터 마이그레이션<br>
 https://gom20.tistory.com/293
 
-3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법
+3.dbeaver EC2 Mysql 연결 오류 - 에러메시지별 해결방법<br>
 https://velog.io/@nowlee/dbeaver-EC2-Mysql-%EC%97%B0%EA%B2%B0-%EC%98%A4%EB%A5%98-%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%EB%B3%84-%ED%95%B4%EA%B2%B0%EB%B0%A9%EB%B2%95
