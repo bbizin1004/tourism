@@ -166,7 +166,7 @@
 
 ![](src/main/resources/image/ERD.png)
 
-## 7. Architecture --> 화면은 gif,jpg 파일로 repository에 src/resources/image에 업로드해주세요.
+## 7. Architecture
 
 ![architecture-seoulTourism](https://github.com/user-attachments/assets/4d0e1d58-f510-41d3-af85-599cdca60648)
 
