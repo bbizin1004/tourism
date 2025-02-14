@@ -15,14 +15,14 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   application:
-    name: ecommerce
+    name: tourism
   datasource:
+    driver-class-name: ${DATABASE_DRIVER}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://mariadb.cjq82ikaejvr.ap-northeast-2.rds.amazonaws.com:3306/project2?useUnicode=true&characterEncoding=UTF-8
+    url: ${DATABASE_URL}
   jpa:
-    #database-platform: org.hibernate.dialect.MariaDBDialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
       ddl-auto: update
     properties:
@@ -33,7 +33,6 @@ spring:
 
 jwt:
   secret-key-source: ${JWT_SECRET_KEY}
-
 cloud:
   aws:
     s3:
