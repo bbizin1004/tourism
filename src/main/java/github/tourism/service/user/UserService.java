@@ -141,12 +141,14 @@ public class UserService {
 
             String username = userPrincipal.getUserName();
 
+            Integer userId = userPrincipal.getUserId();
+
             List<String> roles = userPrincipal.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
-            String access = jwtTokenProvider.createToken("access", email, username, roles);
-            String refresh = jwtTokenProvider.createRefreshToken("refresh", email, username, roles);
+            String access = jwtTokenProvider.createToken("access", userId,email, username, roles);
+            String refresh = jwtTokenProvider.createRefreshToken("refresh", email, roles);
 
             Long expiredMs = jwtTokenProvider.getExpirationTime(refresh);
             addRefreshEntity(email, refresh, expiredMs);
