@@ -21,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -33,14 +32,33 @@ public class UserController {
     private final UserService authService;
 
     @PostMapping(value = "/email")
-    public ResponseEntity<ApiResponse<CheckedEmailResponse>> checkEmail(@Valid @RequestBody CheckedEmailRequest emailCheckRequest, BindingResult bindingResult) {
+    public ResponseEntity<ApiResponse<CheckedEmailResponse>> checkEmail(
+            @Valid @RequestBody CheckedEmailRequest emailCheckRequest,
+            BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             throw new CustomValidationException(ErrorCode.REGISTER_FAILURE);
         }
 
-        boolean validation = authService.checkedEmail(emailCheckRequest);
-        CheckedEmailResponse response = new CheckedEmailResponse(validation, validation ? "중복되지 않은 이메일입니다." : "이미 사용중인 이메일입니다.");
-        return ResponseEntity.ok(ApiResponse.onSuccess(response));
+        try {
+            boolean isEmailAvailable = authService.checkedEmail(emailCheckRequest);
+            CheckedEmailResponse response = new CheckedEmailResponse(
+                    isEmailAvailable,
+                    "사용 가능한 이메일입니다."
+            );
+            return ResponseEntity.ok(ApiResponse.onSuccess(response));
+        } catch (BadRequestException ex) {
+            CheckedEmailResponse response = new CheckedEmailResponse(
+                    false,
+                    "이미 존재하는 이메일입니다."
+            );
+            return ResponseEntity.ok
+                    (ApiResponse.onFailure(
+                            HttpStatus.OK.value(),
+                            ex.getMessage(),
+                            response
+                    ));
+        }
     }
 
     @PostMapping(value = "/signup")

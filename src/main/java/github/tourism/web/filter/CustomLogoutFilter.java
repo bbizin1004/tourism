@@ -69,9 +69,18 @@ public class CustomLogoutFilter extends GenericFilterBean {
 
         refreshRepository.deleteByRefresh(refresh);
 
+        String domain = "https://seoultourismweb.vercel.app"; // 기본 도메인
+        if (request.getServerName().equals("localhost")) {
+            domain = "localhost"; // 로컬 환경에서는 도메인을 localhost로 설정 "http://localhost:3000"
+        }
+
         Cookie cookie = new Cookie("refresh", null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
+        //cookie.setSecure(true); // HTTPS 환경일 경우
+        cookie.setHttpOnly(true);
+        cookie.setDomain(domain); // ✅ 도메인 설정
+        cookie.setSecure(!"localhost".equals(domain)); // ✅ 로컬 환경에서는 Secure 비활성화
         response.addCookie(cookie);
         response.setStatus(HttpServletResponse.SC_OK);
     }
