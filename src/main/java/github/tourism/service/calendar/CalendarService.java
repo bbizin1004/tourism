@@ -51,7 +51,7 @@ public class CalendarService {
         //  추가: CalendarDetails 엔티티 생성 및 저장
         CalendarDetails calendarDetails = new CalendarDetails();
         calendarDetails.setCalendar(savedCalendar);  // 캘린더와 연관 관계 설정
-        calendarDetails.setPlaceName(dto.getPlaceName()); // 장소 이름
+//        calendarDetails.setPlaceName(dto.getPlaceName()); // 장소 이름
         calendarDetails.setPlaceImage(dto.getPlaceImage()); // 장소 이미지
         calendarDetails.setPlaceLocation(dto.getPlaceLocation()); // 장소 위치
         calendarDetails.setScheduleTime(dto.getScheduleTime()); // 일정 시작 시간

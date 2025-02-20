@@ -34,6 +34,7 @@ public class CalendarDetails {
 //    @Column(name = "calendar_id")
 //    private Integer calendarId ;
 
+
     @Column(name = "place_name")
     private String placeName ;
 
