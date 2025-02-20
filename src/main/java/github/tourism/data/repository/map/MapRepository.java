@@ -34,4 +34,8 @@ public interface MapRepository extends JpaRepository<Map, Integer> {
     void decrementLikemarkCount(@Param("mapId") Integer mapId);
 
     List<Map> findByCategory(String category);
+
+    // placeName으로 likeMarkCount 조회
+    @Query("SELECT m FROM Map m WHERE m.place_name = :placeName")
+    Optional <Map> findMapByPlaceName(@Param("placeName") String placeName);
 }

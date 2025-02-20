@@ -32,8 +32,13 @@ public class CalendarRequestDTO {
 
     private String memo;
 
+    private String placeName;
+    private String placeImage;
+    private String placeLocation;
+
+
     // 생성자
-    public CalendarRequestDTO(Integer userId, Integer mapId, LocalDate tourStartDate, LocalDateTime scheduleTime, LocalDateTime scheduleEndTime, Integer favPlaceId, String memo) {
+    public CalendarRequestDTO(Integer userId, Integer mapId, LocalDate tourStartDate, LocalDateTime scheduleTime, LocalDateTime scheduleEndTime, Integer favPlaceId, String memo, String placeName, String placeImage, String placeLocation) {
         this.userId = userId;
         this.mapId = mapId;
         this.tourStartDate = tourStartDate;
@@ -42,5 +47,8 @@ public class CalendarRequestDTO {
         this.favPlaceId = favPlaceId;
 //        this.placeName = placeName;
         this.memo = memo;
+        this.placeName = placeName;
+        this.placeImage = placeImage;
+        this.placeLocation = placeLocation;
     }
 }

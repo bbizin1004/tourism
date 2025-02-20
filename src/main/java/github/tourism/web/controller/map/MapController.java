@@ -78,6 +78,15 @@ public class MapController {
         return ResponseEntity.ok(isFavorite);
     }
 
+    // placeName으로 likeMarkCount 조회
+    @GetMapping("/{placeName}/likes")
+    public ResponseEntity<Integer> getPlaceLikes(@PathVariable String placeName) {
+        Integer likeMarkCount = mapService.getLikesByPlaceName(placeName);
+
+        return ResponseEntity.ok(likeMarkCount);
+    }
+
+
 
 
 
