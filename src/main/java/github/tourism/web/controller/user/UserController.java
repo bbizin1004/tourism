@@ -139,8 +139,10 @@ public class UserController {
         String origin = request.getHeader("Origin");
         if (origin != null && origin.contains("localhost")) {
             cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
+            cookie.setDomain("localhost");
         } else {
             cookie.setSecure(true); // 배포 환경에서는 Secure 적용
+            cookie.setDomain("https://seoultourismweb.vercel.app");
         }
         return cookie;
     }
