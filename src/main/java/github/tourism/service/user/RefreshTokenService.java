@@ -63,7 +63,7 @@ public class RefreshTokenService {
         addRefreshEntity(email, newRefresh, expiredMs);
 
         response.setHeader("Authorization", "Bearer " + newAccess);
-        Cookie refreshCookie = createCookie("refresh", newRefresh);
+        Cookie refreshCookie = createCookie("refresh", newRefresh,request);
         response.addCookie(refreshCookie);
 
         Map<String, String> tokens = new HashMap<>();
@@ -98,13 +98,20 @@ public class RefreshTokenService {
         refreshRepository.save(refreshEntity);
     }
 
-    private Cookie createCookie(String key, String value) {
+    private Cookie createCookie(String key, String value, HttpServletRequest request) {
 
         Cookie cookie = new Cookie(key, value);
+        cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge(3*60*60); // 쿠키의 유효 기간을 설정
-        cookie.setSecure(true); // 쿠키가 HTTPS 연결을 통해서만 전송되도록 설정
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); //쿠키를 HTTP 전용으로 설정 -> JavaScript와 같은 클라이언트 측 스크립트에서 이 쿠키에 접근할 수 없게 됩니다.
+
+        String origin = request.getHeader("Origin");
+        if (origin != null && origin.contains("localhost")) {
+            cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
+        } else {
+            cookie.setSecure(true); // 배포 환경에서는 Secure 적용
+        }
 
         return cookie;
     }
