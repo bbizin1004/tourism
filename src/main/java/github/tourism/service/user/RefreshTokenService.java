@@ -108,7 +108,6 @@ public class RefreshTokenService {
 
         // localhost 환경
         if (request.getServerName().equals("localhost")) {
-            cookie.setDomain("localhost");
             cookie.setSecure(false);
         } else {
             // 배포 환경
