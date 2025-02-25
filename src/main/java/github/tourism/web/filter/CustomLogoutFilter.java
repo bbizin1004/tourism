@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@Slf4j
 public class CustomLogoutFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -46,7 +45,6 @@ public class CustomLogoutFilter extends GenericFilterBean {
         }
 
         String refresh = getRefreshTokenFromCookies(request);
-        log.info(refresh);
 
         if (refresh == null) {
             createErrorResponse(response, ErrorCode.UNAUTHORIZED_REFRESH);
