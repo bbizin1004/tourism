@@ -22,6 +22,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RefreshTokenService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshRepository refreshRepository;
@@ -30,6 +31,7 @@ public class RefreshTokenService {
     public Map<String, String> reissueTokens(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String refresh = getRefreshTokenFromCookies(request);
 
+        log.info(refresh);
         if (refresh == null) {
             throw new Exception(ErrorCode.UNAUTHORIZED_REFRESH.getErrorMessage());
         }
@@ -99,20 +101,16 @@ public class RefreshTokenService {
     }
 
     private Cookie createCookie(String key, String value, HttpServletRequest request) {
-        String domain;
-        if (request.getServerName().equals("localhost")) {
-            // 로컬 환경에서는 Domain 속성 생략하거나 "localhost"로 사용
-            domain = "localhost"; // 또는 domain 설정 자체를 아예 제거
-        } else {
-            // 배포 환경에서는 순수 도메인만 사용 (프로토콜 제거)
-            domain = "seoultourismweb.vercel.app";
-        }
         Cookie cookie = new Cookie(key, value);
         cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge(3*60*60); // 쿠키의 유효 기간을 설정
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); //쿠키를 HTTP 전용으로 설정 -> JavaScript와 같은 클라이언트 측 스크립트에서 이 쿠키에 접근할 수 없게 됩니다.
-        cookie.setSecure(!"localhost".equals(domain));
+        if (!request.getServerName().equals("localhost")) {
+            cookie.setDomain("seoultourismweb.vercel.app");
+            cookie.setSecure(true); // HTTPS 환경에서만 Secure 속성 설정
+            cookie.setAttribute("SameSite", "None"); // SameSite 설정
+        }
         return cookie;
     }
 }
