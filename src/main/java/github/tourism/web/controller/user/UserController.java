@@ -138,19 +138,14 @@ public class UserController {
 //        }
 //        cookie.setSecure(!"localhost".equals(domain));
         Cookie cookie = new Cookie(key, value);
+        cookie.setAttribute("SameSite", "Lax");
         cookie.setMaxAge(3 * 60 * 60); // 쿠키의 유효 기간을 설정
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); // 쿠키를 HTTP 전용으로 설정
-
-        // localhost 환경
-        if (request.getServerName().equals("localhost")) {
-            cookie.setSecure(false);
-            cookie.setAttribute("SameSite", "Lax");
-        } else {
-            // 배포 환경
+        if (!request.getServerName().equals("localhost")) {
             cookie.setDomain("seoultourismweb.vercel.app");
-            cookie.setSecure(true);
-            cookie.setAttribute("SameSite", "None");
+            cookie.setSecure(true); // HTTPS 환경에서만 Secure 속성 설정
+            cookie.setAttribute("SameSite", "None"); // SameSite 설정
         }
 //        String origin = request.getHeader("Origin");
 //        if (origin != null && origin.contains("localhost")) {
