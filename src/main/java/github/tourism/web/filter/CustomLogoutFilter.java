@@ -88,9 +88,14 @@ public class CustomLogoutFilter extends GenericFilterBean {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        if (!request.getServerName().equals("localhost")) {
+        String origin = request.getHeader("Origin");
+        if (origin != null && origin.contains("localhost")) {
+            cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
+            cookie.setAttribute("SameSite", "Lax");
+        } else {
+            cookie.setSecure(true); // 배포 환경에서는 Secure 적용
+            cookie.setAttribute("SameSite", "None");
             cookie.setDomain("seoultourismweb.vercel.app");
-            cookie.setSecure(true); // HTTPS 환경에서만 Secure 속성 설정
         }
         response.addCookie(cookie);
         response.setStatus(HttpServletResponse.SC_NO_CONTENT); // 204 No Content
