@@ -102,17 +102,18 @@ public class RefreshTokenService {
 
     private Cookie createCookie(String key, String value, HttpServletRequest request) {
         Cookie cookie = new Cookie(key, value);
-        cookie.setAttribute("SameSite", "None");
+        cookie.setAttribute("SameSite", "Lax");
         cookie.setMaxAge(3 * 60 * 60); // 쿠키의 유효 기간을 설정
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); // 쿠키를 HTTP 전용으로 설정
-        String domain = "seoultourismweb.vercel.app";
-        if (request.getServerName().equals("localhost")) {
-            domain = "localhost";
-            cookie.setSecure(false);
-            cookie.setAttribute("SameSite", "Lax");
+        String origin = request.getHeader("Origin");
+        if (origin != null && origin.contains("localhost")) {
+            cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
+        } else {
+            cookie.setSecure(true); // 배포 환경에서는 Secure 적용
+            cookie.setAttribute("SameSite", "None");
+            cookie.setDomain("seoultourismweb.vercel.app");
         }
-        cookie.setSecure(!"localhost".equals(domain));
         return cookie;
     }
 }
