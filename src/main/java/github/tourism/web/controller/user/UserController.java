@@ -132,20 +132,27 @@ public class UserController {
     }
 
     private Cookie createCookie(String key, String value, HttpServletRequest request) {
+        String domain;
+        if (request.getServerName().equals("localhost")) {
+            // 로컬 환경에서는 Domain 속성 생략하거나 "localhost"로 사용
+            domain = "localhost"; // 또는 domain 설정 자체를 아예 제거
+        } else {
+            // 배포 환경에서는 순수 도메인만 사용 (프로토콜 제거)
+            domain = "seoultourismweb.vercel.app";
+        }
         Cookie cookie = new Cookie(key, value);
         cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge(3*60*60); // 쿠키의 유효 기간을 설정
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); //쿠키를 HTTP 전용으로 설정 -> JavaScript와 같은 클라이언트 측 스크립트에서 이 쿠키에 접근할 수 없게 됩니다.
-
-        String origin = request.getHeader("Origin");
-        if (origin != null && origin.contains("localhost")) {
-            cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
-            cookie.setDomain("localhost");
-        } else {
-            cookie.setSecure(true); // 배포 환경에서는 Secure 적용
-            cookie.setDomain("seoultourismweb.vercel.app");
-        }
+        cookie.setSecure(!"localhost".equals(domain));
+//        String origin = request.getHeader("Origin");
+//        if (origin != null && origin.contains("localhost")) {
+//            cookie.setSecure(false); // 로컬에서는 Secure 속성 제거
+//        } else {
+//            cookie.setSecure(true); // 배포 환경에서는 Secure 적용
+//            cookie.setDomain("seoultourismweb.vercel.app");
+//        }
         return cookie;
     }
 }
