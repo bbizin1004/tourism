@@ -85,8 +85,10 @@ public class UserController {
 
         Map<String, String> tokens = authService.login(loginRequest);
         httpServletResponse.setHeader("Authorization", "Bearer " + tokens.get("access"));
+
         Cookie refreshCookie = createCookie("refresh", tokens.get("refresh"),request);
         httpServletResponse.addCookie(refreshCookie);
+
         return ResponseEntity.ok(ApiResponse.onSuccess(tokens));
     }
 
@@ -142,7 +144,7 @@ public class UserController {
             cookie.setDomain("localhost");
         } else {
             cookie.setSecure(true); // 배포 환경에서는 Secure 적용
-            cookie.setDomain("https://seoultourismweb.vercel.app");
+            cookie.setDomain("seoultourismweb.vercel.app");
         }
         return cookie;
     }

@@ -112,7 +112,7 @@ public class RefreshTokenService {
             cookie.setDomain("localhost");
         } else {
             cookie.setSecure(true); // 배포 환경에서는 Secure 적용
-            cookie.setDomain("https://seoultourismweb.vercel.app");
+            cookie.setDomain("seoultourismweb.vercel.app");
         }
 
         return cookie;
