@@ -106,7 +106,7 @@ public class RefreshTokenService {
         cookie.setPath("/"); // 쿠키가 유효한 경로를 설정
         cookie.setHttpOnly(true); // 쿠키를 HTTP 전용으로 설정
         cookie.setAttribute("SameSite", "None");
-        String domain = "seoultourismweb.vercel.app";
+        String domain = "seoultourism.store"; //"seoultourismweb.vercel.app";
         if (request.getServerName().equals("localhost")) {
             domain = "localhost";
             cookie.setSecure(false);

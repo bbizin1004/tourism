@@ -147,7 +147,7 @@ public class UserController {
 //            cookie.setDomain("seoultourismweb.vercel.app");
 //        }
         cookie.setAttribute("SameSite", "None");
-        String domain = "seoultourismweb.vercel.app";
+        String domain = "seoultourism.store"; //"seoultourismweb.vercel.app";
         if (request.getServerName().equals("localhost")) {
             domain = "localhost";
             cookie.setSecure(false);
