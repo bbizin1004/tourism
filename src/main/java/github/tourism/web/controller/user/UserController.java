@@ -145,6 +145,7 @@ public class UserController {
         // localhost 환경
         if (request.getServerName().equals("localhost")) {
             cookie.setSecure(false);
+            cookie.setAttribute("SameSite", "Lax");
         } else {
             // 배포 환경
             cookie.setDomain("seoultourismweb.vercel.app");
