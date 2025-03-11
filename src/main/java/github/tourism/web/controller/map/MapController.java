@@ -54,7 +54,10 @@ public class MapController {
 
     //맵 상세조회
     @GetMapping("/{mapId}")
-    public ResponseEntity<MapDetailsDTO> getMapDetail(@PathVariable Integer mapId) {
+    public ResponseEntity<MapDetailsDTO> getMapDetail(@AuthenticationPrincipal CustomUserDetails user,@PathVariable Integer mapId) {
+
+
+        System.out.println("CustomUserDetails 정보 :" + user);
 
         //현재 사용자 인증 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

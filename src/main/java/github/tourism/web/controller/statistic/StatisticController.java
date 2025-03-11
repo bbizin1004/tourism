@@ -18,7 +18,6 @@ public class StatisticController {
 
     private final StatisticService statisticService;
 
-    //프론트 요청에 의해 맵핑 주소 변경함
     @GetMapping("/genderByAll")
     public ResponseEntity<ApiResponse<List<GenderResponseDTO>>> showGenderStatistic() {
         try {
@@ -29,7 +28,6 @@ public class StatisticController {
         }
     }
 
-    //프론트 요청에 의해 맵핑 주소를 이것만 씀.
     //성별통계-월별 방문인구 많은순으로 상위 7개 나라 조회
     @GetMapping("/genderTop7ByMonth")
     public ResponseEntity<ApiResponse<GenderTop7ResponseDTO>> getGenderTop7ByMonth(
@@ -54,9 +52,6 @@ public class StatisticController {
         }
     }
 
-
-
-    //프론트 요청에 의해 맵핑주소를 변경
     @GetMapping("/purposeByAll")
     public ResponseEntity<ApiResponse<List<PurposeResponseDTO>>> showPurposeStatistic() {
         try {
@@ -72,7 +67,6 @@ public class StatisticController {
     public ResponseEntity<ApiResponse<PurposeTop7ResponseDTO>> getPurposeTop7ByMonth(
             @RequestParam int year, @RequestParam int month) {
 
-        //프론트엔드 API 요청 양식에 따라 수정함.
         try {
             PurposeTop7ResponseDTO responseDTO = statisticService.getTop7PurposeByMonth(year, month);
             return ResponseEntity.ok(ApiResponse.onSuccess(responseDTO));
