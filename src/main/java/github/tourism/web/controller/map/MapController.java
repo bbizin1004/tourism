@@ -56,29 +56,7 @@ public class MapController {
     @GetMapping("/{mapId}")
     public ResponseEntity<MapDetailsDTO> getMapDetail(@AuthenticationPrincipal CustomUserDetails user,@PathVariable Integer mapId) {
 
-
-        System.out.println("CustomUserDetails 정보 :" + user);
-
-        //현재 사용자 인증 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        Integer userId = null;
-
-        if(authentication != null && authentication.isAuthenticated()){
-            Object principal = authentication.getPrincipal();
-            System.out.println("🔍 authentication.getPrincipal() 결과: " + principal);
-
-            if(principal instanceof CustomUserDetails){
-              CustomUserDetails userDetails = (CustomUserDetails) principal;
-              userId = Integer.valueOf(userDetails.getUserId());
-            System.out.println("로그인한 사용자 요청 - userId: " + userId);
-            } else {
-                System.out.println("비회원 조회 - anonymousUser(principal: " + principal +")");
-            }
-        } else {
-            System.out.println("비회원 조회 요청 - authentication null");
-        }
-
+        Integer userId = (user != null)? Integer.valueOf(user.getUserId()) : null;
         MapDetailsDTO mapDetails = mapService.getMapDetail(mapId,userId);
         return ResponseEntity.ok(mapDetails);
     }
