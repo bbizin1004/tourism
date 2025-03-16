@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,15 +38,26 @@ public class CartService {
         Goods goodId = goodsRepository.findById(request.getGoodId())
                 .orElseThrow(() -> new GoodsNotFoundException(ErrorCode.GOODS_NOT_FOUNDED));
 
-        // 빌더 패턴 사용해 cart 객체 생성
-        Cart cart = Cart.builder()
-                .user(userId)
-                .goods(goodId)
-                .quantity(request.getQuantity())
-                .build();
+        // 동일 상품이 있는지 확인
+        Optional<Cart> existingCart = cartRepository.findByUserAndGoods(userId,goodId);
 
-        Cart savedCart = cartRepository.save(cart);
-        return savedCart.getCartId();
+        if(existingCart.isPresent()){
+            Cart cart = existingCart.get();
+            cart.updateQuantity(cart.getQuantity() + request.getQuantity());
+            cartRepository.save(cart);
+            return cart.getCartId();
+        }else {
+            // 빌더 패턴 사용해 cart 객체 생성
+            Cart cart = Cart.builder()
+                    .user(userId)
+                    .goods(goodId)
+                    .quantity(request.getQuantity())
+                    .build();
+
+            Cart savedCart = cartRepository.save(cart);
+            return savedCart.getCartId();
+
+        }
     }
 
     public List<CartListResponse> getCartByUserId(Integer userId) {

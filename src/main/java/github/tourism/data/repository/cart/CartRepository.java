@@ -1,6 +1,8 @@
 package github.tourism.data.repository.cart;
 
 import github.tourism.data.entity.cart.Cart;
+import github.tourism.data.entity.goods.Goods;
+import github.tourism.data.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Transactional
     @Query("DELETE FROM Cart c WHERE c.goods.goodId IN :goodsIds")
     void deleteByGoodsIdIn(@Param("goodsIds") List<Integer> orderItemGoodsIds);
+
+    Optional<Cart> findByUserAndGoods(User userId, Goods goodId);
 }
