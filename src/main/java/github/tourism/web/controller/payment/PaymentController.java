@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -48,15 +50,24 @@ public class PaymentController {
 
     // 결제 내역 조회
     @GetMapping("/history")
-    public ResponseEntity<List<PaymentHistoryResponseDTO>> getPaymentHistory(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        try{
-            Integer userId = customUserDetails.getUserId();
-            List<PaymentHistoryResponseDTO> paymentHistory = paymentService.getPaymentHistory(userId);
-            return ResponseEntity.status(HttpStatus.OK).body(paymentHistory);
-        }catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.emptyList());
+    public ResponseEntity<Map<String,Object>> getPaymentHistory(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        Integer userId = customUserDetails.getUserId();
+        List<PaymentHistoryResponseDTO> paymentHistory = paymentService.getPaymentHistory(userId);
+
+        Map<String,Object> response = new HashMap<>();
+
+        if (paymentHistory.isEmpty()) {
+            response.put("message","결제 내역이 없습니다.");
+            response.put("data",Collections.emptyList());
+        }else {
+            response.put("message","결제 내역 조회 성공");
+            response.put("data",paymentHistory);
         }
+
+        return ResponseEntity.ok(response);
+
+
     }
 
 

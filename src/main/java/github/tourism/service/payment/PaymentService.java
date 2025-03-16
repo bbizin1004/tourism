@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,7 +124,7 @@ public class PaymentService {
         List<Payment> payments = paymentRepository.findByUserId(userId);
 
         if (payments.isEmpty()) {
-            throw new IllegalArgumentException("결제 내역이 없습니다.");
+            return Collections.emptyList();
         }
 
         return payments.stream().map(payment -> {
