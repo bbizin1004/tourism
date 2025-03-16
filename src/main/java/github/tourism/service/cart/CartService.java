@@ -52,6 +52,7 @@ public class CartService {
         List<Cart> cartList = cartRepository.findCartByUserId(userId);
         return cartList.stream()
                 .map(cart -> new CartListResponse(
+                        cart.getCartId(),
                         cart.getGoods().getGoodId(),
                         cart.getGoods().getGoodsName(),
                         cart.getGoods().getGoodsImage(),
